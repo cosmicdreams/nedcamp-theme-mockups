@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup A: Beacon. New England Drupal Camp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#040234; --lamp:#009cde; --lamp-ink:#006c9c; --signal:#bc0a1c;
+  --fog:#eef5fb; --paper:#fff; --ink:#040234; --muted:#4a5070; --line:#d6e0ec;
+  --display:"Barlow Condensed",system-ui,sans-serif; --body:"Public Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--body);color:var(--ink);background:var(--paper);font-size:17px;line-height:1.5}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--lamp);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding-left:28px;padding-right:28px}
+
+/* logo bar: light ground so the official logo sits as designed */
+.top{background:#fff;position:relative;z-index:5}
+.top .wrap{display:flex;align-items:center;gap:32px;height:104px}
+.brand-card{align-self:flex-start;background:#fff;padding:20px 24px 22px;border-radius:0 0 12px 12px;position:relative;z-index:6;box-shadow:0 18px 40px rgba(4,2,52,.18)}
+.logo-img{width:210px;height:auto;display:block}
+.top nav{display:flex;gap:28px;margin-left:auto;font-weight:700;font-size:15px}
+.top nav a{text-decoration:none;position:relative;padding:6px 0}
+.top nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;background:var(--signal);transition:right .25s ease}
+.top nav a:hover::after,.top nav a:focus-visible::after{right:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:4px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:var(--body);white-space:nowrap;transition:transform .15s ease,background-color .2s,border-color .2s}
+.btn:active{transform:translateY(1px)}
+.btn-signal{background:var(--signal);color:#fff}
+.btn-signal:hover{background:#9b0817}
+.btn-ghost{border-color:rgba(255,255,255,.5);color:#fff}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+.top .btn{min-height:42px;font-size:15px;padding:0 16px}
+.menu{display:none;background:#fff;color:var(--night);border-color:var(--night)}
+
+/* hero: a working lighthouse */
+.hero{background:var(--night);color:#fff;position:relative;overflow:hidden;isolation:isolate}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr 1fr;gap:40px;min-height:620px;align-items:center;padding-top:140px;padding-bottom:56px}
+.rays{position:absolute;right:-410px;top:-330px;width:900px;height:900px;z-index:-1;pointer-events:none}
+.rays line{stroke:var(--lamp);stroke-width:1.1;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1.1s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.beam{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:repeating-conic-gradient(from calc(var(--a,200deg) - 9deg) at var(--lx) var(--ly),rgba(0,156,222,.36) 0deg,rgba(0,156,222,.08) 14deg,transparent 18deg,transparent 120deg);
+  opacity:0;transition:opacity 1s}
+.lit .beam{opacity:1}
+.lamp{position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px rgba(0,156,222,.35),0 0 60px 20px rgba(0,156,222,.55);transform:translate(-50%,-50%) scale(0);z-index:-1;transition:transform .5s cubic-bezier(.3,1.6,.5,1) .2s}
+.lit .lamp{transform:translate(-50%,-50%) scale(1)}
+.hero h1{position:relative;font-family:var(--display);font-weight:700;font-size:clamp(60px,8.4vw,124px);line-height:.88;margin:0 0 22px;letter-spacing:-.005em}
+.hero h1 .lit-copy{position:absolute;inset:0;color:var(--lamp);pointer-events:none;opacity:0;transition:opacity 1s;
+  -webkit-mask-image:repeating-conic-gradient(from calc(var(--a,200deg) - 9deg) at var(--mx) var(--my),#000 0deg,#000 14deg,transparent 18deg,transparent 120deg);
+          mask-image:repeating-conic-gradient(from calc(var(--a,200deg) - 9deg) at var(--mx) var(--my),#000 0deg,#000 14deg,transparent 18deg,transparent 120deg)}
+.lit h1 .lit-copy{opacity:1}
+.when{font-family:var(--display);font-weight:600;font-size:32px;line-height:1.1;margin:0 0 8px;color:var(--lamp)}
+.where{margin:0 0 30px;font-size:18px;color:#d7defa;max-width:42ch}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.state-switch{display:inline-flex;gap:2px;background:rgba(255,255,255,.08);padding:4px;border-radius:6px;margin-bottom:28px;position:relative}
+.state-switch button{position:relative;z-index:1;background:none;border:0;color:#c9d1f5;font:700 14px var(--body);padding:8px 14px;border-radius:4px;cursor:pointer;transition:color .25s}
+.state-switch button[aria-pressed=true]{color:var(--night)}
+.state-switch .knob{position:absolute;top:4px;bottom:4px;border-radius:4px;background:#fff;transition:left .35s cubic-bezier(.3,1.3,.5,1),width .35s cubic-bezier(.3,1.3,.5,1)}
+.mock-note{font-size:13px;color:#9fa9da;margin:0 0 8px}
+
+.status{background:var(--paper);color:var(--ink);border-radius:10px;padding:24px 26px 20px;box-shadow:0 30px 80px rgba(0,0,0,.35);view-transition-name:statuscard}
+.status h2{font-family:var(--display);font-size:24px;font-weight:600;margin:0 0 4px}
+.drain{height:4px;background:var(--fog);border-radius:2px;overflow:hidden;margin:6px 0 8px}
+.drain i{display:block;height:100%;background:var(--lamp);transform-origin:left;transition:transform 1.6s cubic-bezier(.2,.7,.2,1) .4s}
+.drain-l{font-size:13px;color:var(--muted);margin:0 0 6px}
+.status ol{list-style:none;margin:0;padding:0}
+.status li{display:grid;grid-template-columns:58px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);opacity:0;transform:translateY(8px);animation:rise .45s ease forwards;animation-delay:calc(var(--i) * 70ms + .3s)}
+.status li:first-child{border-top:0}
+@keyframes rise{to{opacity:1;transform:none}}
+.status time{font-family:var(--display);font-weight:600;font-size:20px;line-height:1.2}
+.status .live{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--signal);margin-right:8px;vertical-align:3px;animation:blink 2s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+.status .room{color:var(--muted);font-size:15px}
+.status .foot{margin:12px 0 0;font-size:15px;color:var(--muted)}
+
+.practical{background:var(--fog)}
+.practical .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.practical a{padding:20px 20px 20px 0;text-decoration:none;display:block}
+.practical a+a{padding-left:20px;border-left:1px solid var(--line)}
+.practical strong{display:block;font-size:16px}
+.practical span{color:var(--muted);font-size:15px}
+.practical a:hover strong{text-decoration:underline;text-underline-offset:3px}
+
+.agenda{padding-top:72px;padding-bottom:88px}
+.agenda-head{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:22px}
+.agenda h2{font-family:var(--display);font-size:56px;line-height:1;margin:0}
+.days{display:flex;margin-top:10px}
+.days a{font-weight:700;font-size:15px;padding:6px 0;margin-right:22px;text-decoration:none;color:var(--muted);border-bottom:3px solid transparent}
+.days a[aria-current]{color:var(--ink);border-color:var(--signal)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;max-width:620px;justify-content:flex-end}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:4px;padding:6px 12px;font:700 14px var(--body);cursor:pointer;color:var(--ink);min-height:36px;transition:background-color .2s,color .2s,border-color .2s}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed=true]{background:var(--night);border-color:var(--night);color:#fff}
+.grid{display:grid;grid-template-columns:96px repeat(5,1fr);border-top:2px solid var(--ink)}
+.grid .hd{font-weight:700;font-size:14px;padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+.t{padding:14px 12px 14px 0;font-family:var(--display);font-weight:600;font-size:22px;line-height:1.05;border-bottom:1px solid var(--line)}
+.t small{display:block;font-weight:500;font-size:15px;color:var(--muted)}
+.t.now{color:var(--lamp-ink)}
+.t.now::after{content:"Now";display:block;margin-top:6px;font:700 12px var(--body);color:#fff;background:var(--signal);width:max-content;padding:2px 7px;border-radius:3px}
+.cell{border-bottom:1px solid var(--line);border-left:1px solid var(--line);padding:12px;min-height:118px;position:relative;transition:opacity .3s ease,background-color .3s}
+.cell.empty{background:repeating-linear-gradient(135deg,transparent 0 8px,#f2f6fb 8px 9px)}
+.cell.now{background:#f1f9fe}
+.cell.past{opacity:.72}
+.cell.dim{opacity:.3}
+.cell::before{content:"";position:absolute;left:-1px;top:0;width:3px;height:100%;background:var(--lamp);transform:scaleY(0);transform-origin:top;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.cell.match::before{transform:scaleY(1)}
+.nowline{position:absolute;left:0;right:0;height:2px;background:var(--signal);pointer-events:none;z-index:1;opacity:.55}
+.talk{all:unset;cursor:pointer;display:block;height:100%;border-radius:4px;position:relative;z-index:2}
+.talk:focus-visible{outline:3px solid var(--lamp);outline-offset:4px}
+.talk b{display:block;font-size:15.5px;line-height:1.3;margin-bottom:6px;transition:color .2s}
+.talk:hover b{color:var(--lamp-ink)}
+.talk .who{display:block;font-size:14px;color:var(--muted)}
+.talk .tags{display:block;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--lamp-ink)}
+.talk .room-m{display:none}
+.span{grid-column:2 / -1;border-bottom:1px solid var(--line);border-left:1px solid var(--line);padding:14px 16px;display:flex;gap:12px;align-items:baseline;background:var(--fog)}
+.span b{font-size:16px}
+.span span{color:var(--muted);font-size:15px}
+.span.past{opacity:.72}
+.span.keynote{background:var(--night);color:#fff;padding:26px 22px;position:relative;overflow:hidden;display:block}
+.span.keynote::after{content:"";position:absolute;inset:0;background:conic-gradient(from 250deg at 92% 120%,rgba(0,156,222,.35) 0deg,transparent 16deg);pointer-events:none}
+.span.keynote .talk b{font-family:var(--display);font-size:40px;font-weight:700;line-height:1;margin:4px 0;color:#fff}
+.span.keynote .who{color:#c9d6ff}
+.span.keynote em{font-style:normal;font-weight:700;color:var(--lamp);font-size:14px}
+
+dialog{border:0;border-radius:12px;padding:0;max-width:560px;width:calc(100% - 32px);box-shadow:0 24px 60px rgba(4,2,52,.35)}
+dialog::backdrop{background:rgba(4,2,52,.55)}
+dialog[open]{animation:pop .32s cubic-bezier(.2,.9,.3,1.2)}
+dialog[open]::backdrop{animation:fade .3s ease}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.96)}}
+@keyframes fade{from{opacity:0}}
+.dlg{padding:28px}
+.dlg .meta{display:flex;gap:18px;flex-wrap:wrap;font-weight:700;color:var(--lamp-ink);margin-bottom:10px}
+.dlg h3{font-family:var(--display);font-size:36px;line-height:1.02;margin:0 0 14px}
+.dlg p{margin:0 0 18px;color:var(--muted)}
+.dlg .row{display:flex;gap:10px;flex-wrap:wrap}
+.btn-ink{background:var(--night);color:#fff}
+.btn-line{border-color:var(--line);color:var(--ink);background:#fff}
+
+footer{background:var(--night);color:#cfd6ff;padding:44px 0;font-size:15px}
+footer .wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:28px}
+footer strong{color:#fff;display:block;margin-bottom:4px}
+
+::view-transition-old(statuscard){animation:.22s ease both vt-out}
+::view-transition-new(statuscard){animation:.42s cubic-bezier(.2,.7,.2,1) both vt-in}
+@keyframes vt-out{to{opacity:0;transform:translateY(-10px)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(14px)}}
+
+@media (max-width:900px){
+  body{font-size:16px}
+  .top nav{display:none}
+  .top .wrap{height:84px;gap:10px}
+  .logo-img{width:120px}
+  .brand-card{padding:12px 14px 14px}
+  .top #topCta{margin-left:auto}
+  .menu{display:inline-flex}
+  .hero .wrap{grid-template-columns:1fr;min-height:0;padding-top:66px;padding-bottom:28px;gap:20px}
+  .rays{width:620px;height:620px;right:-330px;top:150px;transform:none}
+  .hero h1{font-size:58px;margin-bottom:14px}
+  .is-during .hero h1{font-size:34px}
+  .is-during .hero h1 br{display:none}
+  .is-during .where,.is-during .ctas,.mock-note{display:none}
+  .when{font-size:24px}
+  .state-switch button{padding:8px 10px;font-size:13px}
+  .state-switch{margin-bottom:20px}
+  .ctas .btn{flex:1;padding:0 12px;font-size:15px}
+  .practical .wrap{grid-template-columns:1fr 1fr}
+  .practical a,.practical a+a{padding:14px 10px;border-left:0;border-top:1px solid var(--line)}
+  .agenda{padding-top:44px}
+  .agenda h2{font-size:42px}
+  .filters{justify-content:flex-start}
+  .grid{grid-template-columns:1fr}
+  .grid .hd{display:none}
+  .t{padding:22px 0 8px;border-bottom:0}
+  .t small{display:inline;margin-left:6px}
+  .t.now::after{display:inline-block;margin:0 0 0 10px;vertical-align:4px}
+  .cell{border-left:0;min-height:0;padding:12px 0 12px 12px}
+  .cell.empty{display:none}
+  .talk .room-m{display:inline-block;font-size:12px;font-weight:700;background:var(--night);color:#fff;padding:1px 7px;border-radius:3px;margin-bottom:6px}
+  .span{grid-column:1;border-left:0}
+  .span.keynote .talk b{font-size:30px}
+  .nowline{display:none}
+  footer .wrap{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .rays line{animation:none;stroke-dashoffset:0}
+  .status li{animation:none;opacity:1;transform:none}
+  .status .live,dialog[open],dialog[open]::backdrop{animation:none}
+  *{transition-duration:0s!important}
+}
+</style>
+</head>
+<body class="is-during">
+<header class="top">
+  <div class="wrap">
+    <a class="brand-card" href="#" aria-label="New England Drupal Camp home"><img class="logo-img" src="assets/logo.svg" alt="New England Drupal Camp" width="210" height="179"></a>
+    <nav aria-label="Main"><a href="#agenda">Schedule</a><a href="#">Speakers</a><a href="#">Venue</a><a href="#">Sponsors</a><a href="#">About</a></nav>
+    <a class="btn btn-signal" id="topCta" href="#">Map</a>
+    <button class="btn menu" type="button" aria-expanded="false">Menu</button>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <svg class="rays" id="rays" viewBox="-450 -450 900 900" aria-hidden="true"></svg>
+  <div class="beam" id="beam" aria-hidden="true"></div>
+  <div class="lamp" id="lamp" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <p class="mock-note">Mockup control. The live site would switch on its own.</p>
+      <div class="state-switch" id="switch" role="group" aria-label="Preview the homepage">
+        <span class="knob" id="knob"></span>
+        <button type="button" data-state="before" aria-pressed="false">Before camp</button>
+        <button type="button" data-state="during" aria-pressed="true">During camp</button>
+        <button type="button" data-state="after" aria-pressed="false">After camp</button>
+      </div>
+      <h1 id="h1">New England <br>Drupal Camp<span class="lit-copy" aria-hidden="true">New England <br>Drupal Camp</span></h1>
+      <p class="when" id="whenLine"></p>
+      <p class="where" id="whereLine"></p>
+      <div class="ctas" id="ctas"></div>
+    </div>
+    <aside class="status" id="statusBox" aria-live="polite"></aside>
+  </div>
+</section>
+
+<div class="practical">
+  <div class="wrap">
+    <a href="#"><strong>Gaige Hall, Rhode Island College</strong><span>600 Mt Pleasant Ave, Providence</span></a>
+    <a href="#"><strong>Parking</strong><span>Where to park on campus</span></a>
+    <a href="#"><strong>Code of conduct</strong><span>Report a concern to any organizer</span></a>
+    <a href="#"><strong>Talk to other attendees</strong><span>#nedcamp on Drupal Slack</span></a>
+  </div>
+</div>
+
+<main class="agenda wrap" id="agenda">
+  <div class="agenda-head">
+    <div>
+      <h2>Schedule</h2>
+      <nav class="days" aria-label="Day"><a href="#">Friday: training, summit, contribution</a><a href="#" aria-current="page">Saturday: sessions</a></nav>
+    </div>
+    <div class="filters" id="filters" role="group" aria-label="Highlight topics"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+
+<footer>
+  <div class="wrap">
+    <div><strong>Run by volunteers since 2014.</strong>Our mission is to grow Drupal expertise and community in New England.</div>
+    <div><strong>Find us</strong>Gaige Hall, Rhode Island College<br>600 Mt Pleasant Ave, Providence</div>
+    <div><strong>Stay in touch</strong>#nedcamp on Drupal Slack<br><a href="#">Get camp news by email</a></div>
+  </div>
+</footer>
+
+<script>
+<!--DATA-->
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const vt=fn=>(!reduce&&document.startViewTransition)?document.startViewTransition(fn):fn();
+const roomName=r=>r==="Auditorium"?"Auditorium":"Gaige "+r;
+const litCopy=h1.querySelector(".lit-copy");
+
+/* lighthouse: hairline rays drawn like the logo's, a lamp, a sweeping beam */
+const N=56; let rh="";
+for(let i=0;i<N;i++){
+  const a=(i/N)*Math.PI*2, r0=46, r1=(i%2?300:420)+((i*37)%5)*14;
+  const len=Math.round(r1-r0), d=Math.round(((i*7)%N)/N*500);
+  rh+=`<line x1="${(Math.cos(a)*r0).toFixed(1)}" y1="${(Math.sin(a)*r0).toFixed(1)}" x2="${(Math.cos(a)*r1).toFixed(1)}" y2="${(Math.sin(a)*r1).toFixed(1)}" style="--len:${len};--d:${d}ms" opacity="${i%2?.45:.8}"/>`;
+}
+rays.innerHTML=rh;
+function placeLamp(){
+  const hb=hero.getBoundingClientRect(), rb=rays.getBoundingClientRect(), h=h1.getBoundingClientRect();
+  const lx=rb.left+rb.width/2-hb.left, ly=rb.top+rb.height/2-hb.top;
+  lamp.style.left=lx+"px"; lamp.style.top=ly+"px";
+  beam.style.setProperty("--lx",lx+"px"); beam.style.setProperty("--ly",ly+"px");
+  litCopy.style.setProperty("--mx",(lx-(h.left-hb.left))+"px"); litCopy.style.setProperty("--my",(ly-(h.top-hb.top))+"px");
+}
+placeLamp(); addEventListener("resize",placeLamp);
+let t0=null;
+function sweep(ts){
+  if(t0===null)t0=ts;
+  const a=(200+((ts-t0)/12000)*360)%360;   // three-panel lens, one turn every 12 seconds: a beam crosses the page every 4 seconds
+  hero.style.setProperty("--a",a+"deg");
+  requestAnimationFrame(sweep);
+}
+if(!reduce) setTimeout(()=>{hero.classList.add("lit");requestAnimationFrame(sweep);},1150);
+else { hero.classList.add("lit"); hero.style.setProperty("--a","200deg"); }
+
+/* date-aware homepage */
+const STATES={
+  before:{cta:"Get a ticket",when:"Friday and Saturday, November 12 and 13, 2027",where:"Rhode Island College, Providence. Tickets go on sale in August.",
+    ctas:[["Get a ticket","btn-signal"],["Propose a session","btn-ghost"]],
+    status:()=>`<h2>Coming up</h2><ol>${[["Jun 1","Session proposals open"],["Aug 15","Proposals close"],["Sep 20","Schedule published"],["Nov 12","Training, summit and contribution day"]].map(([d,t],i)=>`<li style="--i:${i}"><time>${d}</time><div>${t}</div></li>`).join("")}</ol>`},
+  during:{cta:"Map",when:"Saturday, day two. Sessions until 4:45.",where:"Everything is in Gaige Hall. Lunch is in the Faculty Center.",
+    ctas:[["Today's schedule","btn-signal","#agenda"],["Directions and parking","btn-ghost"]],status:()=>duringStatus()},
+  after:{cta:"Watch sessions",when:"Thanks for coming. See you November 2027.",where:"Slides and recordings from Saturday are up.",
+    ctas:[["Watch the sessions","btn-signal"],["Save the date","btn-ghost"]],
+    status:()=>`<h2>Most watched</h2><ol>${[["The Work We Want","Ethan Marcotte, keynote"],["You Don't Need JS for That","Aubrey Sambor"],["Drupal AI Modules Worth Knowing About","Michael Anello"]].map(([t,w],i)=>`<li style="--i:${i}"><time>${i+1}</time><div>${t}<div class="room">${w}</div></div></li>`).join("")}</ol>`}
+};
+function duringStatus(){
+  const now=SLOTS.find(s=>slotState(s)==="now"), next=SLOTS.find(s=>slotState(s)==="next");
+  const left=mins(now.end)-mins(DEMO_NOW);
+  return `<h2><span class="live" aria-hidden="true"></span>Happening now</h2>
+  <div class="drain" aria-hidden="true"><i id="drain"></i></div>
+  <p class="drain-l">${left} minutes left. This slot ends at ${now.end}.</p>
+  <ol>${now.talks.map((t,i)=>`<li style="--i:${i}"><time>${t.room==="Auditorium"?"Aud":t.room}</time><div>${t.title}<div class="room">${t.who}</div></div></li>`).join("")}</ol>
+  <p class="foot">Next at ${next.start}: ${next.talks.length} sessions, including ${next.talks[0].title.split(":")[0]}.</p>`;
+}
+function moveKnob(){const b=document.querySelector('#switch button[aria-pressed="true"]');knob.style.left=b.offsetLeft+"px";knob.style.width=b.offsetWidth+"px";}
+function render(k){
+  const s=STATES[k];
+  document.body.className="is-"+k;
+  document.querySelectorAll("#switch button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.state===k));
+  topCta.textContent=s.cta; whenLine.textContent=s.when; whereLine.textContent=s.where;
+  ctas.innerHTML=s.ctas.map(([t,c,h])=>`<a class="btn ${c}" href="${h||"#"}">${t}</a>`).join("");
+  statusBox.innerHTML=s.status();
+  moveKnob(); placeLamp();
+  const d=document.getElementById("drain");
+  if(d){const now=SLOTS.find(s=>slotState(s)==="now");const f=(mins(DEMO_NOW)-mins(now.start))/(mins(now.end)-mins(now.start));
+    d.style.transform="scaleX(1)"; requestAnimationFrame(()=>requestAnimationFrame(()=>d.style.transform=`scaleX(${(1-f).toFixed(3)})`));}
+}
+document.querySelectorAll("#switch button").forEach(b=>b.onclick=()=>vt(()=>render(b.dataset.state)));
+render("during");
+document.fonts&&document.fonts.ready.then(()=>{moveKnob();placeLamp();});
+
+/* schedule grid */
+let active=new Set();
+filters.innerHTML=Object.entries(TRACK_NAMES).map(([k,v])=>`<button class="chip" type="button" data-k="${k}" aria-pressed="false">${v}</button>`).join("");
+filters.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;const k=b.dataset.k;active.has(k)?active.delete(k):active.add(k);b.setAttribute("aria-pressed",active.has(k));applyFilter();};
+const ALL=[];
+let gh=`<div class="hd">Time</div>`+ROOMS.map(r=>`<div class="hd">${roomName(r)}</div>`).join("");
+SLOTS.forEach(s=>{
+  const st=slotState(s);
+  gh+=`<div class="t ${st}">${s.start}<small>to ${s.end}</small></div>`;
+  if(s.talks){
+    ROOMS.forEach(r=>{
+      const t=s.talks.find(x=>x.room===r);
+      if(!t){gh+=`<div class="cell empty ${st}"></div>`;return;}
+      const i=ALL.push({...t,start:s.start,end:s.end})-1;
+      gh+=`<div class="cell ${st}" data-tracks="${t.tracks.join(" ")}"><button class="talk" data-i="${i}"><span class="room-m">${roomName(r)}</span><b>${t.title}</b><span class="who">${t.who}${t.org?", "+t.org:""}</span><span class="tags">${t.tracks.map(k=>TRACK_NAMES[k]).join(", ")}${t.lvl!=="All"?", "+t.lvl.toLowerCase():""}</span></button></div>`;
+    });
+  } else if(s.keynote){
+    const k=s.keynote, i=ALL.push({...k,tracks:["hu"],lvl:"All",start:s.start,end:s.end})-1;
+    gh+=`<div class="span keynote ${st}"><button class="talk" data-i="${i}"><em>Keynote in the Auditorium</em><b>${k.title}</b><span class="who">${k.who}, ${k.org}</span></button></div>`;
+  } else gh+=`<div class="span ${st}"><b>${s.all.title}</b><span>${s.all.where}</span></div>`;
+});
+grid.innerHTML=gh;
+function applyFilter(){
+  grid.querySelectorAll(".cell[data-tracks]").forEach(c=>{
+    const hit=active.size>0&&c.dataset.tracks.split(" ").some(k=>active.has(k));
+    c.classList.toggle("dim",active.size>0&&!hit); c.classList.toggle("match",hit);
+  });
+}
+grid.onclick=e=>{
+  const b=e.target.closest(".talk"); if(!b)return; const t=ALL[b.dataset.i];
+  dlgBody.innerHTML=`<div class="meta"><span>Saturday ${t.start} to ${t.end}</span><span>${t.room==="Auditorium"?"Auditorium":"Gaige Hall "+t.room}</span></div>
+  <h3>${t.title}</h3><p>${t.who}${t.org?", "+t.org:""}. ${t.tracks.map(k=>TRACK_NAMES[k]).join(", ")}. ${t.lvl==="All"?"For every level.":"Assumes some Drupal experience."}</p>
+  <div class="row"><button class="btn btn-ink" type="button">Add to my day</button><a class="btn btn-line" href="#">Slides</a><button class="btn btn-line" type="button" onclick="dlg.close()">Close</button></div>`;
+  dlg.showModal();
+};
+</script>
+</body>
+</html>

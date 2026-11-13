@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup C: Pocket. New England Drupal Camp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#040234;--cyan:#009cde;--cyan-ink:#006c9c;--red:#bc0a1c;--sky:#e9f5fc;--line:#d7e3ee;--muted:#4f5775;--board:#dbe9f4;
+  --disp:"Bricolage Grotesque",system-ui,sans-serif;--body:"Public Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--body);color:var(--navy);background:var(--board);font-size:16px;line-height:1.45}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+button{font:inherit;color:inherit}
+
+.stage{max-width:1240px;margin:0 auto;padding:28px 32px 0;display:grid;grid-template-columns:420px 1fr;gap:64px;align-items:center;min-height:calc(100vh - 150px)}
+.story .kicker{font-family:var(--disp);font-weight:700;font-size:18px;color:var(--cyan-ink);margin:0 0 8px}
+.story h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,6.4vw,92px);line-height:.95;margin:0 0 20px;letter-spacing:-.02em}
+.story p{font-size:19px;max-width:48ch;margin:0 0 16px;color:#262a4d}
+.story .leads{font-weight:700;font-size:16px;color:var(--muted)}
+.story .leads b{color:var(--navy)}
+.vt-story{view-transition-name:story}
+
+/* phone */
+.phone{width:390px;height:780px;border-radius:44px;background:#fff;overflow:hidden;box-shadow:0 0 0 11px var(--navy),0 40px 80px rgba(4,2,52,.28);position:relative;display:flex;flex-direction:column;justify-self:center}
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;view-transition-name:screen;scrollbar-width:none}
+.bar{display:flex;align-items:flex-start;justify-content:space-between;padding:16px 20px 8px}
+.logo-img{width:118px;height:auto;display:block}
+.pill{font-weight:700;font-size:14px;background:var(--red);color:#fff;border-radius:999px;padding:9px 15px;text-decoration:none;border:0}
+.pill.navy{background:var(--navy)}
+.pad{padding:0 20px}
+.big{font-family:var(--disp);font-weight:800;font-size:42px;line-height:.98;margin:12px 0 10px;letter-spacing:-.01em}
+.sub{font-size:16px;margin:0 0 16px;color:#262a4d}
+.sub b{display:block;font-family:var(--disp);font-size:22px;color:var(--navy)}
+.stack{display:grid;gap:10px;margin-bottom:20px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:12px;font-weight:700;text-decoration:none;font-size:16px;border:0}
+.btn.red{background:var(--red);color:#fff}
+.btn.line{border:2px solid var(--navy);color:var(--navy);background:#fff}
+.card{background:var(--sky);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.card h3{font-family:var(--disp);font-size:18px;margin:0 0 4px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.sect{font-family:var(--disp);font-weight:800;font-size:22px;margin:16px 0 8px;display:flex;justify-content:space-between;align-items:baseline}
+.sect small{font-family:var(--disp);font-size:15px;font-weight:700;color:var(--cyan-ink)}
+.steps{list-style:none;margin:0 0 20px;padding:0}
+.steps li{display:grid;grid-template-columns:72px 1fr;padding:10px 0;border-top:1px solid var(--line);font-size:15px}
+.steps li b{font-family:var(--disp)}
+.steps li.done{color:var(--muted)}
+.steps li.done b{text-decoration:line-through;text-decoration-color:var(--cyan)}
+.steps li.on b{color:var(--red)}
+
+.ribbon{display:flex;gap:3px;padding:6px 20px 2px;align-items:flex-end;position:relative}
+.ribbon span{flex:1;height:10px;border-radius:3px;background:var(--line);transition:background-color .3s,height .3s}
+.ribbon span.r-past{background:#9aa0bf}
+.ribbon span.r-now{background:var(--cyan);height:18px}
+.ribbon span.talk{flex:3}.ribbon span.key{flex:2.4}
+.ribbon .mark{position:absolute;top:-2px;bottom:-4px;width:2px;background:var(--red);border-radius:1px;transition:left .25s linear}
+.daylbl{display:flex;justify-content:space-between;padding:4px 20px 0;font-family:var(--disp);font-size:12px;color:var(--muted);font-weight:700}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:0 44px 4px 20px;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 78%,transparent);mask-image:linear-gradient(90deg,#000 78%,transparent)}
+.chips button{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font-weight:700;font-size:13px;cursor:pointer;min-height:36px;transition:background-color .2s,color .2s}
+.chips button[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+.sess{display:grid;grid-template-columns:50px 1fr 44px;gap:10px;padding:12px 0;border-top:1px solid var(--line);align-items:start;animation:rise .4s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 60ms)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+.sess .rm{font-family:var(--disp);font-weight:800;font-size:17px;line-height:1.1}
+.sess .rm small{display:block;font-family:var(--body);font-weight:400;font-size:11px;color:var(--muted)}
+.sess b{display:block;font-size:15px;line-height:1.3}
+.sess span{font-size:13.5px;color:var(--muted)}
+.sess.dim{opacity:.3}
+.star{all:unset;cursor:pointer;width:44px;height:44px;display:grid;place-items:center;border-radius:50%}
+.star:focus-visible{outline:3px solid var(--cyan)}
+.star svg{width:22px;height:22px;fill:none;stroke:var(--navy);stroke-width:1.8;transition:transform .2s}
+.star[aria-pressed=true] svg{fill:var(--red);stroke:var(--red);animation:spin .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes spin{40%{transform:scale(1.35) rotate(18deg)}}
+.next{background:var(--navy);color:#fff;border-radius:14px;padding:14px 16px;margin:14px 0 20px}
+.next b{font-family:var(--disp);font-size:18px;display:block}
+.next span{color:#c5d1ff;font-size:14px}
+.vid{display:grid;grid-template-columns:112px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);animation:rise .4s both;animation-delay:calc(var(--i,0) * 70ms)}
+.thumb{height:64px;border-radius:10px;background:var(--navy);position:relative;overflow:hidden}
+.thumb::before{content:"";position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(0,156,222,.45) 0deg 1.2deg,transparent 1.2deg 9deg);animation:turn 30s linear infinite}
+@keyframes turn{to{transform:rotate(1turn)}}
+.thumb::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-40%,-50%);border-left:14px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent}
+.thumb em{position:absolute;right:6px;bottom:4px;font-style:normal;font-size:11px;color:#fff;font-weight:700;font-family:var(--disp);z-index:1}
+.vid b{font-size:15px;line-height:1.3;display:block}
+.vid span{font-size:13.5px;color:var(--muted)}
+.save{border:2px dashed var(--cyan);border-radius:14px;padding:16px;margin:4px 0 18px}
+.save b{font-family:var(--disp);font-size:22px;display:block}
+
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:#fff;position:relative;z-index:2}
+.tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:700;color:var(--muted);text-decoration:none;padding:8px 0 20px;position:relative}
+.tabs a[aria-current]{color:var(--navy)}
+.tabs a i{width:22px;height:4px;border-radius:2px;margin-bottom:6px}
+.tabs a[aria-current] i{background:var(--cyan)}
+.badge{position:absolute;top:2px;left:calc(50% + 14px);min-width:18px;height:18px;border-radius:9px;background:var(--red);color:#fff;font-size:11px;display:grid;place-items:center;padding:0 5px}
+.badge.bump{animation:bump .45s cubic-bezier(.3,1.8,.5,1)}
+@keyframes bump{40%{transform:scale(1.5)}}
+.flyer{position:fixed;z-index:50;pointer-events:none;width:22px;height:22px;color:var(--red)}
+
+/* scrubber */
+.scrub{max-width:1240px;margin:0 auto;padding:28px 32px 36px}
+.scrub-h{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:10px}
+.scrub-h output{font-family:var(--disp);font-weight:800;font-size:26px}
+.scrub-h button{border:2px solid var(--navy);background:transparent;border-radius:999px;padding:6px 14px;font-weight:700;cursor:pointer;min-height:40px}
+.track{position:relative;height:64px}
+.track .seg{position:absolute;top:24px;height:14px;border-radius:7px}
+.seg.before{background:#b9cde0}.seg.during{background:var(--cyan)}.seg.after{background:var(--navy);opacity:.75}
+.track .tick{position:absolute;top:44px;transform:translateX(-50%);font-family:var(--disp);font-weight:700;font-size:13px;color:var(--muted);white-space:nowrap}
+.track .tick::before{content:"";position:absolute;left:50%;top:-8px;width:1px;height:6px;background:var(--muted)}
+input[type=range]{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:grab}
+.thumbknob{position:absolute;top:13px;width:36px;height:36px;border-radius:50%;background:#fff;border:3px solid var(--navy);transform:translateX(-50%);pointer-events:none;box-shadow:0 6px 16px rgba(4,2,52,.25);display:grid;place-items:center}
+.thumbknob::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--red)}
+input[type=range]:focus-visible + .thumbknob{outline:3px solid var(--cyan);outline-offset:3px}
+
+@media (max-width:860px){
+  body{background:#fff}
+  .stage{grid-template-columns:1fr;padding:0;gap:0;min-height:0}
+  .story{padding:20px 20px 0;order:2}
+  .story h1{font-size:40px}
+  .story p{font-size:17px}
+  .phone{width:100%;height:auto;border-radius:0;box-shadow:none;order:1}
+  .screen{overflow:visible}
+  .tabs{display:none}
+  .scrub{position:sticky;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 16px 14px;z-index:20}
+  .scrub-h output{font-size:18px}
+  .track .tick:nth-child(odd){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .sess,.vid,.star[aria-pressed=true] svg,.badge.bump,.thumb::before{animation:none}
+  .ribbon .mark{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="phone" id="phone">
+    <div class="screen" id="phoneScreen"></div>
+    <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  </div>
+  <div class="story vt-story" id="story" aria-live="polite"></div>
+</div>
+
+<div class="scrub">
+  <div class="scrub-h"><output id="when" for="range"></output><button type="button" id="replay">Replay the year</button></div>
+  <div class="track" id="track">
+    <input type="range" id="range" min="0" max="1000" value="0" aria-label="Move through the year">
+    <span class="thumbknob" id="knob"></span>
+  </div>
+</div>
+
+<script>
+<!--DATA-->
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const vt=fn=>(!reduce&&document.startViewTransition)?document.startViewTransition(fn):fn();
+const LOGO='<img class="logo-img" src="assets/logo.svg" alt="New England Drupal Camp" width="118" height="101">';
+
+/* The year, mapped onto the scrubber. Saturday is stretched so each hour has room. */
+const MONTHS=["Jun","Jul","Aug","Sep","Oct","Nov"];
+const P={beforeEnd:420, friEnd:500, satEnd:900};
+const SAT0=mins("8:00"), SAT1=19*60;
+function at(v){
+  if(v<P.beforeEnd){const day=Math.round(v/P.beforeEnd*164);const d=new Date(2027,5,1+day);return {phase:"before",date:d,label:d.toLocaleDateString("en-US",{month:"long",day:"numeric"})};}
+  if(v<P.friEnd) return {phase:"friday",label:"Friday, November 12"};
+  if(v<P.satEnd){const m=Math.round(SAT0+(v-P.friEnd)/(P.satEnd-P.friEnd)*(SAT1-SAT0));const h=Math.floor(m/60),mm=m%60;const t=`${h>12?h-12:h}:${String(mm).padStart(2,"0")}`;return {phase:"saturday",clock:t,label:`Saturday, November 13, ${t} ${h>=12?"PM":"AM"}`};}
+  return {phase:"after",label:"After camp, into December"};
+}
+const vSat=t=>P.friEnd+(mins(t)-SAT0)/(SAT1-SAT0)*(P.satEnd-P.friEnd);
+const TARGET=Math.round(vSat("10:20"));
+
+/* track ticks */
+const seg=(a,b,c)=>`<span class="seg ${c}" style="left:${a/10}%;width:${(b-a)/10}%"></span>`;
+let tk=seg(0,P.beforeEnd-4,"before")+seg(P.beforeEnd,P.satEnd-4,"during")+seg(P.satEnd,1000,"after");
+MONTHS.forEach((m,i)=>tk+=`<span class="tick" style="left:${(i/5.5*P.beforeEnd)/10}%">${m}</span>`);
+tk+=`<span class="tick" style="left:${(P.beforeEnd+40)/10}%">Fri</span>`;
+["9:00","12:00","3:00","6:00"].forEach(t=>tk+=`<span class="tick" style="left:${vSat(t)/10}%">Sat ${t}</span>`);
+tk+=`<span class="tick" style="left:95%">Dec</span>`;
+track.insertAdjacentHTML("afterbegin",tk);
+
+/* phone screens */
+let starred=new Set(SLOTS.flatMap(s=>[...(s.talks||[]),...(s.keynote?[s.keynote]:[])]).filter(t=>["Chris Weber","Ethan Marcotte"].includes(t.who)).map(t=>t.title));
+let active=new Set();
+const starSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>';
+const sessRow=(t,i,time)=>{const dim=active.size&&!(t.tracks||[]).some(k=>active.has(k));return `<div class="sess ${dim?"dim":""}" style="--i:${i}"><div class="rm">${t.room==="Auditorium"?"Aud":t.room}<small>${time||"Gaige"}</small></div><div><b>${t.title}</b><span>${t.who}</span></div><button class="star" type="button" aria-pressed="${starred.has(t.title)}" aria-label="Add ${t.title} to my day" data-t="${t.title.replace(/"/g,"&quot;")}">${starSvg}</button></div>`;};
+const TABS={before:["Home","Schedule","Venue","Sponsors"],during:["Now","Schedule","My day","Venue"],after:["Home","Videos","Photos","About"]};
+function tabs(kind){tabsEl.innerHTML=TABS[kind].map((t,i)=>`<a href="#" ${i===0?'aria-current="page"':""} data-tab="${t}"><i></i>${t}${t==="My day"?`<span class="badge" id="badge">${starred.size}</span>`:""}</a>`).join("");}
+const tabsEl=document.getElementById("tabs"), phoneScreen=document.getElementById("phoneScreen");
+
+function beforeScreen(d){
+  const steps=[["Jun 1","Session proposals open",new Date(2027,5,1)],["Aug 15","Proposals close",new Date(2027,7,15)],["Sep 20","Schedule published",new Date(2027,8,20)],["Nov 12","Camp begins",new Date(2027,10,12)]];
+  const sched=d>=steps[2][2], cfp=d<steps[1][2];
+  const onIdx=steps.findIndex(s=>d<s[2]);
+  return `<div class="bar">${LOGO}<a class="pill" href="#">Tickets</a></div><div class="pad">
+    <h2 class="big">New England Drupal Camp</h2>
+    <p class="sub"><b>November 12 and 13, 2027</b>Rhode Island College, Providence</p>
+    <div class="stack"><a class="btn red" href="#">Get a ticket</a>${cfp?'<a class="btn line" href="#">Propose a session by August 15</a>':sched?'<a class="btn line" href="#">See the schedule</a>':'<a class="btn line" href="#">Proposals are in review</a>'}</div>
+    <div class="card"><h3>New to Drupal?</h3><p>Most sessions are for every level. Volunteers at the front desk will point you to the right room.</p></div>
+    <div class="sect">Key dates</div>
+    <ol class="steps">${steps.map((s,i)=>`<li class="${d>=s[2]?"done":i===onIdx?"on":""}"><b>${s[0]}</b>${s[1]}</li>`).join("")}</ol></div>`;
+}
+function fridayScreen(){
+  return `<div class="bar">${LOGO}<a class="pill navy" href="#">Map</a></div><div class="pad">
+    <h2 class="big">Friday is hands-on</h2><p class="sub">Everything is in Gaige Hall.</p>
+    <div class="card"><h3>Training</h3><p>Full-day workshops. Bring a laptop.</p></div>
+    <div class="card"><h3>Summit</h3><p>Talks and discussion for people who run Drupal teams and programs.</p></div>
+    <div class="card"><h3>Contribution day</h3><p>Mentors help you land your first Drupal contribution.</p></div>
+    <div class="stack" style="margin-top:14px"><a class="btn red" href="#">Find your room</a></div></div>`;
+}
+function saturdayScreen(clock){
+  const st=s=>{const n=mins(clock);if(n>=mins(s.end))return"past";if(n>=mins(s.start))return"now";return"next";};
+  const now=SLOTS.find(s=>st(s)==="now")||SLOTS.find(s=>st(s)==="next")||SLOTS[SLOTS.length-1];
+  const nxt=SLOTS.find(s=>st(s)==="next"&&s!==now);
+  const isNow=st(now)==="now";
+  const items=now.talks?now.talks.map((t,i)=>sessRow(t,i)).join(""):now.keynote?sessRow({...now.keynote,tracks:["hu"]},0):`<div class="card" style="animation:rise .4s both"><h3>${now.all.title}</h3><p>${now.all.where}</p></div>`;
+  const all=[];SLOTS.forEach(s=>{(s.talks||[]).forEach(t=>all.push({...t,time:s.start}));if(s.keynote)all.push({...s.keynote,time:s.start,tracks:["hu"]});});
+  const mine=all.filter(t=>starred.has(t.title)&&mins(t.time)>=mins(now.start));
+  return `<div class="bar">${LOGO}<span style="font-family:var(--disp);font-weight:800;font-size:18px">Saturday</span><a class="pill navy" href="#">Map</a></div>
+    <div class="ribbon" id="ribbon">${SLOTS.map(s=>`<span class="r-${st(s)} ${s.talks?"talk":s.keynote?"key":""}"></span>`).join("")}<i class="mark" id="mark"></i></div>
+    <div class="daylbl"><span>8:00</span><span>Lunch</span><span>Keynote</span><span>7:00</span></div>
+    <div class="pad"><div class="sect">${isNow?"Happening now":"Up next"} <small id="until">${isNow?`until ${now.end}`:`at ${now.start}`}</small></div></div>
+    ${now.talks?`<div class="chips" id="chips">${Object.entries(TRACK_NAMES).map(([k,v])=>`<button type="button" data-k="${k}" aria-pressed="${active.has(k)}">${v}</button>`).join("")}</div>`:""}
+    <div class="pad"><div id="nowList">${items}</div>
+    ${nxt?`<div class="next"><b>Next at ${nxt.start}</b><span>${nxt.talks?`${nxt.talks.length} sessions, including ${nxt.talks[0].title.split(":")[0]}`:nxt.keynote?`Keynote: ${nxt.keynote.title}, ${nxt.keynote.who}`:nxt.all.title}</span></div>`:""}
+    <div class="sect">My day</div><div id="myDay">${mine.map((t,i)=>sessRow(t,i,t.time)).join("")||'<p class="sub">Tap a star to build your day.</p>'}</div></div>`;
+}
+function afterScreen(){
+  const V=[["The Work We Want","Ethan Marcotte, keynote","58:12"],["You Don't Need JS for That","Aubrey Sambor","41:30"],["Drupal AI Modules Worth Knowing About","Michael Anello","44:05"],["Passing the Drupal Torch","Thomas and Olivia Scola","39:48"]];
+  return `<div class="bar">${LOGO}<a class="pill navy" href="#">Videos</a></div><div class="pad">
+    <h2 class="big">Thanks for coming</h2><p class="sub">Slides and recordings from Saturday are up.</p>
+    <div class="save"><b>See you November 2027</b>Same place, same weekend.<div class="stack" style="margin:12px 0 0"><a class="btn red" href="#">Save the date</a></div></div>
+    ${V.map(([t,w,d],i)=>`<div class="vid" style="--i:${i}"><div class="thumb"><em>${d}</em></div><div><b>${t}</b><span>${w}</span></div></div>`).join("")}</div>`;
+}
+const STORY={
+  before:d=>({k:"Before camp",h:d<new Date(2027,7,15)?"Fill the rooms and the program.":"Sell the last tickets.",p:d<new Date(2027,7,15)?"From June to mid-August the homepage asks for two things: buy a ticket, propose a session. Everything else waits.":"Once proposals close, the second button changes to the schedule as soon as it's published. Key dates cross themselves off.",l:"Leads with: <b>Get a ticket</b>"}),
+  friday:()=>({k:"Camp, day one",h:"Point people to the right room.",p:"Friday is training, the summit and contribution day. The homepage becomes a room finder, and the top button turns into the campus map.",l:"Leads with: <b>Find your room</b>"}),
+  saturday:c=>({k:"Camp, day two",h:"What's on right now?",p:`It's ${c}. The phone opens on the sessions happening now, what's next, and the talks you starred. Drag the timeline through Saturday and the list follows.`,l:"Leads with: <b>Happening now</b>"}),
+  after:()=>({k:"After camp",h:"Keep the talks alive.",p:"From the Sunday after camp until spring, the homepage leads with recordings and a save-the-date for next November.",l:"Leads with: <b>Watch the sessions</b>"})
+};
+
+let lastKey="", lastClock="";
+function update(v,animate){
+  const s=at(v);
+  when.textContent=s.label;
+  knob.style.left=(v/10)+"%";
+  const key=s.phase==="before"?"before-"+(s.date<new Date(2027,7,15)?"a":s.date<new Date(2027,8,20)?"b":"c"):s.phase==="saturday"?(()=>{const x=SLOTS.find(x=>mins(s.clock)<mins(x.end))||{start:"end"};return "sat-"+x.start+(x.start!=="end"&&mins(s.clock)>=mins(x.start)?"n":"x");})():s.phase;
+  const paint=()=>{
+    const kind=s.phase==="before"?"before":s.phase==="after"?"after":"during";
+    phoneScreen.innerHTML=s.phase==="before"?beforeScreen(s.date):s.phase==="friday"?fridayScreen():s.phase==="saturday"?saturdayScreen(s.clock):afterScreen();
+    const st=STORY[s.phase](s.phase==="before"?s.date:s.clock);
+    story.innerHTML=`<p class="kicker">${st.k}</p><h1>${st.h}</h1><p>${st.p}</p><p class="leads">${st.l}</p>`;
+    if(tabsEl.dataset.kind!==kind){tabs(kind);tabsEl.dataset.kind=kind;}
+  };
+  if(key!==lastKey){ const phaseChange=lastKey.split("-")[0]!==key.split("-")[0]; lastKey=key; (animate&&phaseChange?vt:f=>f())(paint); }
+  else if(s.phase==="saturday"&&s.clock!==lastClock){ const p=story.querySelector("p:nth-of-type(2)"); if(p) p.textContent=STORY.saturday(s.clock).p; }
+  if(s.phase==="saturday"){lastClock=s.clock; placeMark(s.clock);}
+}
+function placeMark(clock){
+  const r=document.getElementById("ribbon"), m=document.getElementById("mark"); if(!r||!m)return;
+  const spans=[...r.querySelectorAll("span")]; const i=SLOTS.findIndex(x=>mins(clock)<mins(x.end));
+  if(i<0)return; const sp=spans[i], s=SLOTS[i]; const f=Math.max(0,Math.min(1,(mins(clock)-mins(s.start))/(mins(s.end)-mins(s.start))));
+  m.style.left=(sp.offsetLeft+sp.offsetWidth*f)+"px";
+}
+
+/* interaction */
+range.addEventListener("input",()=>{stopPlay();update(+range.value,true);});
+phoneScreen.addEventListener("click",e=>{
+  const c=e.target.closest(".chips button");
+  if(c){const k=c.dataset.k;active.has(k)?active.delete(k):active.add(k);c.setAttribute("aria-pressed",active.has(k));phoneScreen.querySelectorAll("#nowList .sess").forEach(row=>{const t=SLOTS.flatMap(s=>s.talks||[]).find(x=>x.title===row.querySelector(".star").dataset.t);row.classList.toggle("dim",!!(t&&active.size&&!t.tracks.some(k=>active.has(k))));});return;}
+  const b=e.target.closest(".star"); if(!b)return;
+  const t=b.dataset.t, on=!starred.has(t); on?starred.add(t):starred.delete(t);
+  phoneScreen.querySelectorAll(".star").forEach(x=>{if(x.dataset.t===t)x.setAttribute("aria-pressed",on);});
+  const badge=document.getElementById("badge");
+  const land=()=>{if(badge){badge.textContent=starred.size;badge.classList.remove("bump");void badge.offsetWidth;badge.classList.add("bump");} const v=+range.value; lastKey=""; update(v,false);};
+  if(on&&badge&&!reduce&&getComputedStyle(tabsEl).display!=="none"){
+    const a=b.getBoundingClientRect(), z=badge.getBoundingClientRect();
+    const f=document.createElement("div"); f.className="flyer"; f.innerHTML=starSvg.replace("<svg",'<svg fill="currentColor"'); document.body.appendChild(f);
+    f.animate([{left:a.left+11+"px",top:a.top+11+"px",transform:"scale(1)"},{left:(a.left+z.left)/2+"px",top:Math.min(a.top,z.top)-60+"px",transform:"scale(1.4)",offset:.45},{left:z.left+"px",top:z.top+"px",transform:"scale(.5)"}],{duration:650,easing:"cubic-bezier(.4,0,.2,1)"}).onfinish=()=>{f.remove();land();};
+  } else land();
+});
+
+/* play the year once on load */
+let raf=null;
+function play(){
+  stopPlay(); const from=0, to=TARGET, t0=performance.now(), dur=7000;
+  const ease=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+  const step=t=>{const p=Math.min(1,(t-t0)/dur);const v=Math.round(from+(to-from)*ease(p));range.value=v;update(v,true);if(p<1)raf=requestAnimationFrame(step);else raf=null;};
+  raf=requestAnimationFrame(step);
+}
+function stopPlay(){if(raf){cancelAnimationFrame(raf);raf=null;}}
+replay.onclick=play;
+range.value=reduce?TARGET:0; update(+range.value,false);
+if(!reduce) setTimeout(play,600);
+addEventListener("resize",()=>{if(lastClock)placeMark(lastClock);});
+</script>
+</body>
+</html>

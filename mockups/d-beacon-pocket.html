@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup D: Beacon header with Pocket. New England Drupal Camp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#040234; --cyan:#009cde; --cyan-ink:#006c9c; --red:#bc0a1c;
+  --sky:#e9f5fc; --board:#e3eef7; --line:#d6e0ec; --muted:#4a5070; --ink:#040234;
+  --cond:"Barlow Condensed",system-ui,sans-serif; --disp:"Bricolage Grotesque",system-ui,sans-serif; --body:"Public Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--body);color:var(--ink);background:#fff;font-size:17px;line-height:1.5}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.wrap{max-width:1280px;margin:0 auto;padding-left:32px;padding-right:32px}
+
+/* header + chin (from A, without the beacon) */
+.top{background:#fff;position:relative;z-index:6}
+.top .wrap{display:flex;align-items:flex-start;gap:32px;height:96px}
+.brand-card{background:#fff;padding:20px 24px 22px;border-radius:0 0 12px 12px;box-shadow:0 18px 40px rgba(4,2,52,.2);flex:none}
+.logo-img{width:210px;height:auto;display:block}
+.top nav{display:flex;gap:28px;margin-left:auto;align-self:center;font-weight:700;font-size:15px}
+.top nav a{text-decoration:none;position:relative;padding:6px 0}
+.top nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;background:var(--red);transition:right .25s ease}
+.top nav a:hover::after,.top nav a:focus-visible::after{right:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:4px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent;cursor:pointer;white-space:nowrap;transition:transform .15s ease,background-color .2s,border-color .2s}
+.btn:active{transform:translateY(1px)}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:#9b0817}
+.btn-ghost{border-color:rgba(255,255,255,.5);color:#fff;background:transparent}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.07)}
+.top .btn{align-self:center;min-height:42px;font-size:15px;padding:0 16px}
+.menu{display:none;background:#fff;color:var(--night);border-color:var(--night)}
+
+.chin{background:var(--night);color:#fff;position:relative}
+.chin .wrap{display:grid;grid-template-columns:258px 1fr auto;gap:36px;align-items:center;min-height:150px;padding-top:22px;padding-bottom:26px}
+.now-msg{view-transition-name:chinmsg}
+.now-msg .when{font-weight:700;font-size:14px;color:#9fd8f2;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+.now-msg .when .live{width:9px;height:9px;border-radius:50%;background:var(--red);animation:blink 2s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+.now-msg h1{font-family:var(--cond);font-weight:700;font-size:clamp(34px,3.6vw,52px);line-height:1;margin:0;letter-spacing:-.005em}
+.now-msg p{margin:6px 0 0;color:#d2d9f7;font-size:17px}
+.chin-ctas{display:flex;gap:10px;view-transition-name:chinctas}
+
+/* the calendar */
+.cal{background:var(--board);padding:28px 0 0}
+.scrub-h{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:6px}
+.scrub-h output{font-family:var(--disp);font-weight:800;font-size:24px}
+.scrub-h button{border:2px solid var(--night);background:transparent;border-radius:999px;padding:6px 14px;font-weight:700;cursor:pointer;min-height:40px}
+.scrub-h button:hover{background:var(--night);color:#fff}
+.track{position:relative;height:62px}
+.track .seg{position:absolute;top:22px;height:14px;border-radius:7px}
+.seg.before{background:#b6cbe0}.seg.during{background:var(--cyan)}.seg.after{background:var(--night);opacity:.75}
+.track .tick{position:absolute;top:42px;transform:translateX(-50%);font-family:var(--disp);font-weight:700;font-size:13px;color:var(--muted);white-space:nowrap}
+.track .tick::before{content:"";position:absolute;left:50%;top:-7px;width:1px;height:5px;background:var(--muted)}
+input[type=range]{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:grab}
+.knob{position:absolute;top:11px;width:36px;height:36px;border-radius:50%;background:#fff;border:3px solid var(--night);transform:translateX(-50%);pointer-events:none;box-shadow:0 6px 16px rgba(4,2,52,.25);display:grid;place-items:center}
+.knob::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--red)}
+input[type=range]:focus-visible + .knob{outline:3px solid var(--cyan);outline-offset:3px}
+
+.boardgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:20px;padding:22px 0 56px;view-transition-name:board}
+.panel{background:#fff;border-radius:16px;padding:22px 24px;min-height:120px}
+.panel h2{font-family:var(--disp);font-weight:800;font-size:26px;line-height:1.1;margin:0 0 4px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.panel h2 small{font-size:15px;color:var(--cyan-ink);font-weight:700;white-space:nowrap}
+.panel .lede{margin:0 0 12px;color:var(--muted);font-size:15px}
+.panel.dark{background:var(--night);color:#fff}
+.panel.dark .lede{color:#c5d1ff}
+.ribbon{display:flex;gap:3px;align-items:flex-end;position:relative;margin:4px 0 4px}
+.ribbon span{flex:1;height:10px;border-radius:3px;background:var(--line);transition:background-color .3s,height .3s}
+.ribbon span.r-past{background:#9aa0bf}
+.ribbon span.r-now{background:var(--cyan);height:18px}
+.ribbon span.talk{flex:3}.ribbon span.key{flex:2.4}
+.ribbon .mark{position:absolute;top:-3px;bottom:-4px;width:2px;background:var(--red);border-radius:1px;transition:left .2s linear}
+.daylbl{display:flex;justify-content:space-between;font-family:var(--disp);font-size:12px;color:var(--muted);font-weight:700;margin-bottom:10px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.chips button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-weight:700;font-size:13px;cursor:pointer;min-height:34px;transition:background-color .2s,color .2s}
+.chips button[aria-pressed=true]{background:var(--night);border-color:var(--night);color:#fff}
+.sess{display:grid;grid-template-columns:52px 1fr 44px;gap:10px;padding:12px 0;border-top:1px solid var(--line);align-items:start;animation:rise .42s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 60ms)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+.sess .rm{font-family:var(--cond);font-weight:700;font-size:21px;line-height:1}
+.sess .rm small{display:block;font-family:var(--body);font-weight:400;font-size:11px;color:var(--muted);margin-top:2px}
+.sess b{display:block;font-size:15.5px;line-height:1.3}
+.sess span{font-size:14px;color:var(--muted)}
+.sess.dim{opacity:.3;transition:opacity .25s}
+.panel.dark .sess{border-color:rgba(255,255,255,.15)}
+.panel.dark .sess span,.panel.dark .sess .rm small{color:#c5d1ff}
+.star{all:unset;cursor:pointer;width:44px;height:44px;display:grid;place-items:center;border-radius:50%}
+.star:focus-visible{outline:3px solid var(--cyan)}
+.star svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8}
+.star[aria-pressed=true] svg{fill:var(--red);stroke:var(--red);animation:spin .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes spin{40%{transform:scale(1.35) rotate(18deg)}}
+.count{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:12px;background:var(--red);color:#fff;font-family:var(--body);font-size:13px;padding:0 7px;vertical-align:4px}
+.count.bump{animation:bump .45s cubic-bezier(.3,1.8,.5,1)}
+@keyframes bump{40%{transform:scale(1.5)}}
+.flyer{position:fixed;z-index:50;pointer-events:none;width:22px;height:22px;color:var(--red)}
+.card{background:var(--sky);border-radius:12px;padding:14px 16px;margin-top:10px;animation:rise .42s both;animation-delay:calc(var(--i,0) * 70ms)}
+.card h3{font-family:var(--disp);font-size:18px;margin:0 0 2px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.steps{list-style:none;margin:6px 0 0;padding:0}
+.steps li{display:grid;grid-template-columns:76px 1fr;padding:10px 0;border-top:1px solid var(--line);font-size:15.5px;animation:rise .42s both;animation-delay:calc(var(--i,0) * 70ms)}
+.steps li b{font-family:var(--disp)}
+.steps li.done{color:var(--muted)}
+.steps li.done b{text-decoration:line-through;text-decoration-color:var(--cyan)}
+.steps li.on b{color:var(--red)}
+.vid{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:10px 0;border-top:1px solid var(--line);animation:rise .42s both;animation-delay:calc(var(--i,0) * 70ms)}
+.thumb{height:68px;border-radius:10px;background:var(--night);position:relative}
+.thumb::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-40%,-50%);border-left:14px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent}
+.thumb em{position:absolute;right:6px;bottom:4px;font-style:normal;font-size:11px;color:#fff;font-weight:700}
+.vid b{display:block;font-size:15.5px;line-height:1.3}
+.vid span{font-size:14px;color:var(--muted)}
+.getting a{display:block;padding:10px 0;border-top:1px solid var(--line);text-decoration:none}
+.getting a:first-of-type{border-top:0}
+.getting strong{display:block;font-size:15.5px}
+.getting span{color:var(--muted);font-size:14px}
+.getting a:hover strong{text-decoration:underline;text-underline-offset:3px}
+
+/* full schedule (from A) */
+.agenda{padding-top:64px;padding-bottom:88px}
+.agenda-head{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px}
+.agenda h2{font-family:var(--cond);font-size:52px;line-height:1;margin:0}
+.days{display:flex;margin-top:8px}
+.days a{font-weight:700;font-size:15px;padding:6px 0;margin-right:22px;text-decoration:none;color:var(--muted);border-bottom:3px solid transparent}
+.days a[aria-current]{color:var(--ink);border-color:var(--red)}
+.grid{display:grid;grid-template-columns:96px repeat(5,1fr);border-top:2px solid var(--ink)}
+.grid .hd{font-weight:700;font-size:14px;padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+.t{padding:14px 12px 14px 0;font-family:var(--cond);font-weight:600;font-size:22px;line-height:1.05;border-bottom:1px solid var(--line);transition:color .3s}
+.t small{display:block;font-weight:500;font-size:15px;color:var(--muted)}
+.t.now{color:var(--cyan-ink)}
+.t.now::after{content:"Now";display:block;margin-top:6px;font:700 12px var(--body);color:#fff;background:var(--red);width:max-content;padding:2px 7px;border-radius:3px}
+.cell{border-bottom:1px solid var(--line);border-left:1px solid var(--line);padding:12px;min-height:112px;transition:opacity .35s ease,background-color .35s}
+.cell.empty{background:repeating-linear-gradient(135deg,transparent 0 8px,#f2f6fb 8px 9px)}
+.cell.now{background:#f1f9fe}
+.cell.past,.span.past{opacity:.7}
+.cell b{display:block;font-size:15px;line-height:1.3;margin-bottom:6px}
+.cell span{display:block;font-size:14px;color:var(--muted)}
+.cell .rm-m{display:none}
+.span{grid-column:2 / -1;border-bottom:1px solid var(--line);border-left:1px solid var(--line);padding:14px 16px;display:flex;gap:12px;align-items:baseline;background:var(--sky);transition:opacity .35s}
+.span span{color:var(--muted);font-size:15px}
+.span.keynote{background:var(--night);color:#fff;padding:24px 22px;display:block}
+.span.keynote b{font-family:var(--cond);font-size:38px;line-height:1;display:block;margin:4px 0}
+.span.keynote em{font-style:normal;font-weight:700;color:#7fd0f2;font-size:14px}
+.span.keynote span{color:#c9d6ff}
+
+footer{background:var(--night);color:#cfd6ff;padding:44px 0;font-size:15px}
+footer .wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:28px}
+footer strong{color:#fff;display:block;margin-bottom:4px}
+
+::view-transition-old(chinmsg),::view-transition-old(chinctas){animation:.2s ease both vt-out}
+::view-transition-new(chinmsg),::view-transition-new(chinctas){animation:.38s cubic-bezier(.2,.7,.2,1) both vt-in}
+::view-transition-old(board){animation:.2s ease both fade-out}
+::view-transition-new(board){animation:.35s ease both fade-in}
+@keyframes vt-out{to{opacity:0;transform:translateY(-8px)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(10px)}}
+@keyframes fade-out{to{opacity:0}}
+@keyframes fade-in{from{opacity:0}}
+
+@media (max-width:980px){
+  .boardgrid{grid-template-columns:1fr 1fr}
+  .boardgrid .panel:first-child{grid-column:1 / -1}
+}
+@media (max-width:760px){
+  body{font-size:16px}
+  .wrap{padding-left:18px;padding-right:18px}
+  .top nav{display:none}
+  .top .wrap{height:76px;gap:10px}
+  .top #topCta{margin-left:auto}
+  .menu{display:inline-flex;align-self:center}
+  .brand-card{padding:10px 12px 12px}
+  .logo-img{width:112px}
+  .chin .wrap{grid-template-columns:1fr;gap:14px;min-height:0;padding-top:72px;padding-bottom:22px}
+  .chin .spacer{display:none}
+  .now-msg h1{font-size:32px}
+  .chin-ctas .btn{flex:1;padding:0 10px;font-size:15px}
+  .cal{padding-top:14px}
+  .boardgrid{grid-template-columns:1fr;padding-bottom:120px}
+  .boardgrid .panel:first-child{grid-column:auto}
+  .scrubber{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:8px 16px 12px;z-index:30}
+  .scrub-h output{font-size:16px}
+  .track .tick:nth-of-type(odd){display:none}
+  .agenda h2{font-size:40px}
+  .grid{grid-template-columns:1fr}
+  .grid .hd{display:none}
+  .t{padding:20px 0 6px;border-bottom:0}
+  .t small{display:inline;margin-left:6px}
+  .t.now::after{display:inline-block;margin:0 0 0 10px;vertical-align:4px}
+  .cell{border-left:0;min-height:0;padding:10px 0 10px 12px}
+  .cell.empty{display:none}
+  .cell .rm-m{display:inline-block;font-size:12px;font-weight:700;background:var(--night);color:#fff;padding:1px 7px;border-radius:3px;margin-bottom:6px}
+  .span{grid-column:1;border-left:0}
+  footer .wrap{grid-template-columns:1fr;padding-bottom:110px}
+}
+@media (prefers-reduced-motion:reduce){
+  .sess,.card,.steps li,.vid,.star[aria-pressed=true] svg,.count.bump,.now-msg .when .live{animation:none}
+  *{transition-duration:0s!important}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand-card" href="#" aria-label="New England Drupal Camp home"><svg class="logo-img" role="img" aria-label="New England Drupal Camp" width="210" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 638.29 542.6"><defs><style>.cls-1,.cls-5{fill:none;}.cls-2,.cls-8{fill:#040234;}.cls-3{fill:#bc0a1c;}.cls-4{clip-path:url(#clip-path);}.cls-5{stroke:#009cde;stroke-miterlimit:10;stroke-width:2px;}.cls-6,.cls-7{fill:#fff;}.cls-7,.cls-8{fill-rule:evenodd;}</style><clipPath id="clip-path" transform="translate(-280.85 -127.6)"><path class="cls-1" d="M622.32,384.67c-55.22,12.25-107.84-22.22-118.81-77.51-5.33-26.84.55-51.82,14.64-75.06,7.73-12.7,17.08-24.13,27-35.1,7.32-8.09,14.83-16,22.08-24.17,15.82-17.77,18.29-21.76,27.39-43,6.82,18.43,20.36,31.53,34,44.54,13.18,12.61,27,24.59,39,38.38,14.24,16.37,25.4,34.39,29.58,56C707.66,322.93,673.67,373.28,622.32,384.67Z"/></clipPath></defs><path class="cls-2" d="M280.85,577.77a1.69,1.69,0,0,1,1.89-1.89H311c11.09,0,17,6,17,17.1v60.24c0,11.08-5.89,17-17,17H282.74a1.64,1.64,0,0,1-1.89-1.89Zm26.88,76.86c3.07,0,4.72-1.53,4.72-4.71V596.28c0-3.19-1.65-4.84-4.72-4.84H296.89v63.19Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M388.26,621.63c0,7.89-2.95,13.08-8.61,15.56l8.14,30.88c.35,1.42-.36,2.13-1.65,2.13H373.87a1.85,1.85,0,0,1-2-1.65L364,638.6h-8.13v29.71A1.74,1.74,0,0,1,354,670.2H341.69a1.74,1.74,0,0,1-1.89-1.89V577.77a1.74,1.74,0,0,1,1.89-1.89h29.59c11.08,0,17,5.9,17,17ZM367.51,623c3.06,0,4.71-1.65,4.71-4.72V596.16c0-3.07-1.65-4.72-4.71-4.72H355.84V623Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M444.85,575.88a2.36,2.36,0,0,1,2.35,2.36v75c0,11.08-5.89,17-17,17H417c-11.08,0-17-5.9-17-17v-75a2.36,2.36,0,0,1,2.36-2.36h11.31a2.36,2.36,0,0,1,2.36,2.36v71.68c0,3.18,1.65,4.71,4.72,4.71h6.13c3.06,0,4.71-1.53,4.71-4.71V578.24a2.36,2.36,0,0,1,2.36-2.36Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M459,577.77a1.73,1.73,0,0,1,1.88-1.89h28.3c11.08,0,17,5.9,17,17v28.77c0,11-5.89,17-17,17H475v29.71a1.69,1.69,0,0,1-1.89,1.89H460.88a1.73,1.73,0,0,1-1.88-1.89ZM485.4,623c3.19,0,4.72-1.77,4.72-4.72V596.16c0-3.07-1.53-4.72-4.72-4.72H475V623Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M556.38,670.2a1.82,1.82,0,0,1-1.89-1.65l-3.3-17.22h-21L527,668.55a1.8,1.8,0,0,1-1.88,1.65H512.52c-1.29,0-1.88-.71-1.53-2l19.57-90.66a1.83,1.83,0,0,1,2-1.65H549a1.84,1.84,0,0,1,2,1.65l19.57,90.66c.23,1.3-.24,2-1.65,2ZM540.7,596.51l-7.55,41.15h15.09Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M597.17,654.63h28.06a1.69,1.69,0,0,1,1.89,1.89v11.79a1.64,1.64,0,0,1-1.89,1.89H583a1.68,1.68,0,0,1-1.88-1.89V577.77a1.74,1.74,0,0,1,1.88-1.89h12.27a1.68,1.68,0,0,1,1.88,1.89Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M715.66,605.59a1.74,1.74,0,0,1-1.89,1.89H702a1.69,1.69,0,0,1-1.89-1.89v-9.43c0-3.07-1.65-4.72-4.71-4.72h-6.13c-3.18,0-4.72,1.65-4.72,4.72v53.76c0,3.18,1.65,4.71,4.72,4.71h6.13c3.06,0,4.71-1.53,4.71-4.71v-9.43A1.69,1.69,0,0,1,702,638.6h11.79a1.74,1.74,0,0,1,1.89,1.89v12.73c0,11.08-6,17-17,17h-13.2c-11.09,0-17.1-5.9-17.1-17V592.86c0-11.08,6-17,17.1-17h13.2c11,0,17,5.9,17,17Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M770.59,670.2a1.8,1.8,0,0,1-1.88-1.65l-3.3-17.22h-21l-3.18,17.22a1.82,1.82,0,0,1-1.89,1.65H726.74c-1.3,0-1.89-.71-1.53-2l19.57-90.66a1.83,1.83,0,0,1,2-1.65h16.39a1.83,1.83,0,0,1,2,1.65l19.57,90.66c.24,1.3-.23,2-1.65,2Zm-15.67-73.69-7.55,41.15h15.09Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M857.84,575.88a2.12,2.12,0,0,1,2.36,2.36v89.6a2.12,2.12,0,0,1-2.36,2.36h-11a2.12,2.12,0,0,1-2.36-2.36V614.79h-.83L832,668.07a2.45,2.45,0,0,1-2.59,2.13h-5.78a2.45,2.45,0,0,1-2.59-2.13l-11.67-53.28h-.83v53.05a2.12,2.12,0,0,1-2.36,2.36H795.36a2.12,2.12,0,0,1-2.36-2.36v-89.6a2.12,2.12,0,0,1,2.36-2.36h15.56a2.44,2.44,0,0,1,2.59,2.12l13.09,58.72L839.69,578a2.45,2.45,0,0,1,2.59-2.12Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M872,577.77a1.74,1.74,0,0,1,1.89-1.89h28.29c11.08,0,17,5.9,17,17v28.77c0,11-5.9,17-17,17H888v29.71a1.68,1.68,0,0,1-1.88,1.89H873.88a1.74,1.74,0,0,1-1.89-1.89ZM898.4,623c3.18,0,4.71-1.77,4.71-4.72V596.16c0-3.07-1.53-4.72-4.71-4.72H888V623Z" transform="translate(-280.85 -127.6)"/><rect class="cls-3" x="1.61" y="416.79" width="83.25" height="7.51"/><rect class="cls-3" x="548.48" y="416.79" width="83.25" height="7.51"/><path class="cls-3" d="M409.31,562.17h-4.52l-20.91-17.6a20.05,20.05,0,0,1-2.37-2.32c.18,1.84.28,3.3.28,4.36v15.56h-6V533.7h4.52l20,16.77a33,33,0,0,1,3.25,3.09c-.18-2.65-.27-4.28-.27-4.91V533.7h5.95Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M451.84,562.17h-29.4V533.7h29.13v4.86H429.06v6.34h13.13v4.86H429.06v7.06h22.78Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M504.36,533.7l-11,28.47h-4.47l-7.83-19.7-7.95,19.7h-4.57l-11-28.47h6.84l7.22,19.09,7.56-19.09h4.63l7.73,19.09,6.89-19.09Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M561.78,562.17h-29.4V533.7H561.5v4.86H539v6.34h13.13v4.86H539v7.06h22.78Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M606.07,562.17h-4.52l-20.91-17.6a20.05,20.05,0,0,1-2.37-2.32c.19,1.84.28,3.3.28,4.36v15.56h-6V533.7h4.52l20,16.77a31.9,31.9,0,0,1,3.25,3.09c-.18-2.65-.27-4.28-.27-4.91V533.7h6Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M652.36,555.44q0,4-1.52,5.35c-1,.92-2.86,1.38-5.55,1.38H625.66q-4,0-5.55-1.38t-1.51-5.35v-15c0-2.64.5-4.43,1.51-5.35s2.86-1.38,5.55-1.38h19.63c2.84,0,4.72.49,5.66,1.47s1.41,2.86,1.41,5.65L645.9,542v-3.2H625.21v18H645.9v-6.35H635.09v-4.85h17.27Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M693,562.17H665V533.7h6.62v23.12H693Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M733.61,562.17h-7.45l-3.42-6.24h-18l-3.31,6.24h-6.61l16.1-28.47h6.4ZM720,550.8l-6.12-11.58-6.34,11.58Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M774.81,562.17h-4.52l-20.9-17.6a19.42,19.42,0,0,1-2.38-2.32c.19,1.84.28,3.3.28,4.36v15.56h-6V533.7h4.53l20,16.77a31.9,31.9,0,0,1,3.25,3.09c-.18-2.65-.27-4.28-.27-4.91V533.7h5.95Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M822.53,547.77q0,8.28-6.29,12.19-3.59,2.2-11.69,2.21H787.94V533.7h18.32q7.4,0,11.58,3.31Q822.54,540.66,822.53,547.77Zm-6.84-.11q0-8.88-9.38-8.88H794.56v18h8.55q6.07,0,8.83-1.55Q815.69,553.18,815.69,547.66Z" transform="translate(-280.85 -127.6)"/><g class="cls-4"><line class="cls-5" x1="318.17" y1="141.09" x2="319.48" y2="0.01"/><line class="cls-5" x1="318.17" y1="141.09" x2="332.3" y2="0.71"/><line class="cls-5" x1="318.17" y1="141.09" x2="346.28" y2="2.83"/><line class="cls-5" x1="318.17" y1="141.09" x2="359.98" y2="6.34"/><line class="cls-5" x1="318.17" y1="141.09" x2="373.27" y2="11.2"/><line class="cls-5" x1="318.17" y1="141.09" x2="385.99" y2="17.37"/><line class="cls-5" x1="318.17" y1="141.09" x2="398.04" y2="24.79"/><line class="cls-5" x1="318.17" y1="141.09" x2="409.28" y2="33.37"/><line class="cls-5" x1="318.17" y1="141.09" x2="419.61" y2="43.03"/><line class="cls-5" x1="318.17" y1="141.09" x2="428.92" y2="53.68"/><line class="cls-5" x1="318.17" y1="141.09" x2="437.11" y2="65.21"/><line class="cls-5" x1="318.17" y1="141.09" x2="444.11" y2="77.5"/><line class="cls-5" x1="318.17" y1="141.09" x2="449.85" y2="90.43"/><line class="cls-5" x1="318.17" y1="141.09" x2="454.26" y2="103.86"/><line class="cls-5" x1="318.17" y1="141.09" x2="457.3" y2="117.68"/><line class="cls-5" x1="318.17" y1="141.09" x2="458.95" y2="131.72"/><line class="cls-5" x1="318.17" y1="141.09" x2="459.18" y2="145.87"/><line class="cls-5" x1="318.17" y1="141.09" x2="457.99" y2="159.96"/><line class="cls-5" x1="318.17" y1="141.09" x2="455.4" y2="173.86"/><line class="cls-5" x1="318.17" y1="141.09" x2="451.43" y2="187.44"/><line class="cls-5" x1="318.17" y1="141.09" x2="446.12" y2="200.55"/><line class="cls-5" x1="318.17" y1="141.09" x2="439.52" y2="213.06"/><line class="cls-5" x1="318.17" y1="141.09" x2="431.71" y2="224.85"/><line class="cls-5" x1="318.17" y1="141.09" x2="422.75" y2="235.79"/><line class="cls-5" x1="318.17" y1="141.09" x2="412.74" y2="245.79"/><line class="cls-5" x1="318.17" y1="141.09" x2="401.78" y2="254.73"/><line class="cls-5" x1="318.17" y1="141.09" x2="389.99" y2="262.53"/><line class="cls-5" x1="318.17" y1="141.09" x2="377.47" y2="269.11"/><line class="cls-5" x1="318.17" y1="141.09" x2="267.34" y2="272.7"/><line class="cls-5" x1="318.17" y1="141.09" x2="254.42" y2="266.95"/><line class="cls-5" x1="318.17" y1="141.09" x2="242.14" y2="259.93"/><line class="cls-5" x1="318.17" y1="141.09" x2="230.62" y2="251.72"/><line class="cls-5" x1="318.17" y1="141.09" x2="219.98" y2="242.4"/><line class="cls-5" x1="318.17" y1="141.09" x2="210.33" y2="232.06"/><line class="cls-5" x1="318.17" y1="141.09" x2="201.77" y2="220.8"/><line class="cls-5" x1="318.17" y1="141.09" x2="194.37" y2="208.75"/><line class="cls-5" x1="318.17" y1="141.09" x2="188.22" y2="196.01"/><line class="cls-5" x1="318.17" y1="141.09" x2="183.37" y2="182.73"/><line class="cls-5" x1="318.17" y1="141.09" x2="179.88" y2="169.02"/><line class="cls-5" x1="318.17" y1="141.09" x2="177.78" y2="155.03"/><line class="cls-5" x1="318.17" y1="141.09" x2="177.09" y2="140.91"/><line class="cls-5" x1="318.17" y1="141.09" x2="177.81" y2="126.78"/><line class="cls-5" x1="318.17" y1="141.09" x2="179.95" y2="112.8"/><line class="cls-5" x1="318.17" y1="141.09" x2="183.48" y2="99.1"/><line class="cls-5" x1="318.17" y1="141.09" x2="188.36" y2="85.83"/><line class="cls-5" x1="318.17" y1="141.09" x2="194.55" y2="73.11"/><line class="cls-5" x1="318.17" y1="141.09" x2="201.97" y2="61.07"/><line class="cls-5" x1="318.17" y1="141.09" x2="210.57" y2="49.84"/><line class="cls-5" x1="318.17" y1="141.09" x2="220.25" y2="39.52"/><line class="cls-5" x1="318.17" y1="141.09" x2="230.91" y2="30.23"/><line class="cls-5" x1="318.17" y1="141.09" x2="242.45" y2="22.05"/><line class="cls-5" x1="318.17" y1="141.09" x2="254.74" y2="15.07"/><line class="cls-5" x1="318.17" y1="141.09" x2="267.68" y2="9.35"/><line class="cls-5" x1="318.17" y1="141.09" x2="281.13" y2="4.95"/><line class="cls-5" x1="318.17" y1="141.09" x2="294.94" y2="1.93"/><line class="cls-5" x1="318.18" y1="141.09" x2="306.51" y2="0.49"/></g><rect class="cls-6" x="292.18" y="183.69" width="54" height="8"/><rect class="cls-6" x="311.18" y="193.69" width="24" height="62"/><rect class="cls-6" x="308.18" y="130.69" width="21" height="28"/><polygon class="cls-7" points="307.18 120.69 301.58 122.83 298.18 129.69 338.62 128.32 337.43 124.39 307.18 120.69"/><rect class="cls-6" x="286.18" y="163.69" width="65" height="12"/><path class="cls-8" d="M475.05,520.3H725c-37.36-40.71-212.8-40.44-249.9,0Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M565.93,302.06h68.14a5.1,5.1,0,0,1,5.09,5.09h0a5.1,5.1,0,0,1-5.09,5.09H565.93a5.1,5.1,0,0,1-5.09-5.09h0a5.1,5.1,0,0,1,5.09-5.09Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M576.22,254.52h47.56c1.17,0,2.13.62,2.13,1.39v3.85c0,.77-1,1.4-2.13,1.4H576.22c-1.17,0-2.13-.63-2.13-1.4v-3.85c0-.77,1-1.39,2.13-1.39Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M622,284.19v-.48a4.65,4.65,0,0,0-4.64-4.64H582.63a4.65,4.65,0,0,0-4.65,4.64v.48h-.32a4.66,4.66,0,0,0-4.64,4.64v12.85a4.66,4.66,0,0,0,4.64,4.64h44.68a4.65,4.65,0,0,0,4.64-4.64V288.83a4.65,4.65,0,0,0-4.64-4.64Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M600,239.72a19.74,19.74,0,0,1,18.38,12.51H581.62A19.74,19.74,0,0,1,600,239.72Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M627,316.14l6.49,176.77h-67L573,316.14Z" transform="translate(-280.85 -127.6)"/><path class="cls-7" d="M605.75,339.43v-8.8a5.75,5.75,0,1,0-11.5,0v8.8Z" transform="translate(-280.85 -127.6)"/><path class="cls-7" d="M594.25,374.57h11.5V355.9a5.75,5.75,0,0,0-11.5,0v18.67Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M584.2,258.77H591v24.38H584.2V258.77Zm24.84,0h6.76v24.38H609V258.77Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M566.25,290.25H580.7V292H568.13v14.6h-1.88V290.25Zm53,0h14.45v16.38h-1.88V292H619.3v-1.78Z" transform="translate(-280.85 -127.6)"/><polygon class="cls-8" points="317.81 102.69 320.48 102.69 320.48 118.69 317.81 118.69 317.81 102.69 317.81 102.69"/></svg></a>
+    <nav aria-label="Main"><a href="#agenda">Schedule</a><a href="#">Speakers</a><a href="#">Venue</a><a href="#">Sponsors</a><a href="#">About</a></nav>
+    <a class="btn btn-red" id="topCta" href="#">Get a ticket</a>
+    <button class="btn menu" type="button" aria-expanded="false">Menu</button>
+  </div>
+</header>
+
+<section class="chin" aria-label="Right now">
+  <div class="wrap">
+    <div class="spacer" aria-hidden="true"></div>
+    <div class="now-msg" id="nowMsg" aria-live="polite"></div>
+    <div class="chin-ctas" id="chinCtas"></div>
+  </div>
+</section>
+
+<section class="cal" id="cal" aria-label="Calendar">
+  <div class="wrap">
+    <div class="scrubber">
+      <div class="scrub-h"><output id="when" for="range"></output><button type="button" id="replay">Replay the year</button></div>
+      <div class="track" id="track">
+        <input type="range" id="range" min="0" max="1000" value="0" aria-label="Move through the camp year">
+        <span class="knob" id="knob"></span>
+      </div>
+    </div>
+    <div class="boardgrid" id="boardgrid"></div>
+  </div>
+</section>
+
+<main class="agenda wrap" id="agenda">
+  <div class="agenda-head">
+    <div>
+      <h2>Full schedule</h2>
+      <nav class="days" aria-label="Day"><a href="#">Friday: training, summit, contribution</a><a href="#" aria-current="page">Saturday: sessions</a></nav>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><strong>Run by volunteers since 2014.</strong>Our mission is to grow Drupal expertise and community in New England.</div>
+    <div><strong>Find us</strong>Gaige Hall, Rhode Island College<br>600 Mt Pleasant Ave, Providence</div>
+    <div><strong>Stay in touch</strong>#nedcamp on Drupal Slack<br><a href="#">Get camp news by email</a></div>
+  </div>
+</footer>
+
+<script>
+// Sample content: the real NEDCamp 2026 Saturday agenda, used to stress-test layouts for 2027.
+const ROOMS = ["Auditorium","203","202","201","204"];
+const TRACK_NAMES = {fe:"Front-end",be:"Back-end",ai:"AI and automation",hu:"Being human",ux:"UX and design",pm:"Project management",ops:"DevOps",a11y:"Accessibility"};
+const SLOTS = [
+ {start:"8:00",end:"8:30",all:{title:"Registration and breakfast",where:"Gaige Hall lobby and 200"}},
+ {start:"8:30",end:"8:45",all:{title:"Opening remarks",where:"Auditorium"}},
+ {start:"9:00",end:"9:45",talks:[
+  {room:"203",title:"Introduction to Drupal LMS",who:"Mark Felton",org:"Tag1",tracks:["be","hu"],lvl:"All"},
+  {room:"202",title:"You Don't Need JS for That",who:"Aubrey Sambor",org:"",tracks:["fe"],lvl:"All"},
+  {room:"201",title:"Nothing Major Broke This Year. Now, Go Defend Your Budget.",who:"Fredric Mitchell",org:"Bright Plum",tracks:["a11y","pm"],lvl:"All"},
+  {room:"204",title:"Every Day Is Judgment Day",who:"Amber Matz",org:"Tugboat",tracks:["ai","hu"],lvl:"All"}]},
+ {start:"10:00",end:"10:45",talks:[
+  {room:"203",title:"Making Drupal Consumer-Friendly: Win More Clients with Modern Hosting",who:"Ashraf Abed",org:"Drupito",tracks:["ops","pm"],lvl:"All"},
+  {room:"202",title:"Content Modeling for Useful Components",who:"Marissa (Mars) Epstein",org:"Mars Digital",tracks:["be","ux"],lvl:"All"},
+  {room:"201",title:"Why Isn't This Done Yet? Matching Your Leadership to the Task",who:"Gena Dellett",org:"Skvare",tracks:["hu"],lvl:"All"},
+  {room:"204",title:"AI Ate My Work, and I'm Okay with That",who:"Jacob Rockowitz",org:"The Big Blue House",tracks:["ai","hu"],lvl:"All"}]},
+ {start:"11:00",end:"11:45",talks:[
+  {room:"Auditorium",title:"Passing the Drupal Torch: Will the Next Generation Take It?",who:"Thomas and Olivia Scola",org:"Bluefly.io, Acquia",tracks:["hu"],lvl:"All"},
+  {room:"203",title:"Beyond Decoupled: Drupal Canvas, Astro and Cloudflare at Scale",who:"Nathan Dentzau, Josh Fabean",org:"Blue Drop Labs",tracks:["fe"],lvl:"Intermediate"},
+  {room:"202",title:"The Future of Drupal in Just Five Words",who:"John Money",org:"Acquia",tracks:["ai"],lvl:"Intermediate"},
+  {room:"201",title:"De-shittification: What Error Messages Are Actually Telling Us",who:"Kit Miklik",org:"State of Maryland",tracks:["be","fe"],lvl:"All"},
+  {room:"204",title:"Drupal AI Modules Worth Knowing About",who:"Michael Anello",org:"DrupalEasy",tracks:["ai"],lvl:"All"}]},
+ {start:"12:00",end:"1:00",all:{title:"Lunch",where:"Faculty Center"}},
+ {start:"1:15",end:"2:15",keynote:{title:"The Work We Want",who:"Ethan Marcotte",org:"Designer, writer and speaker",room:"Auditorium"}},
+ {start:"2:15",end:"2:45",all:{title:"Group photo, then coffee",where:"Auditorium, then Gaige 200"}},
+ {start:"3:00",end:"3:45",talks:[
+  {room:"203",title:"Stop Guessing: Lightweight User Research for Teams",who:"Kyle Soucy",org:"Usable Interface",tracks:["ux"],lvl:"All"},
+  {room:"202",title:"The Great Hook Migration: Getting Down with OOP",who:"JD Flynn",org:"",tracks:["be"],lvl:"Intermediate"},
+  {room:"201",title:"Why Your Website Redesign Isn't Enough: The Case for Web Governance",who:"Rachel Wilken",org:"Indiana University",tracks:["pm","ux"],lvl:"All"},
+  {room:"204",title:"Trusted AI: Guardrails, Governance, and Proof Your Team Still Owns the Work",who:"Jim Birch",org:"Kanopi",tracks:["ai"],lvl:"Intermediate"}]},
+ {start:"4:00",end:"4:45",talks:[
+  {room:"203",title:"Overnight Website Challenge: How Drupal Spent 10 Years Making the Perfect Rapid Development Kit",who:"Chris Weber",org:"Velir",tracks:["ai","hu"],lvl:"All"},
+  {room:"202",title:"When Nobody Notices: Addiction in the Tech Community",who:"Stephen Cross",org:"Talking Drupal",tracks:["hu"],lvl:"All"},
+  {room:"201",title:"I Built My First Drupal Site Template, and You Can Too",who:"Martin Anderson-Clutz",org:"Acquia",tracks:["be","fe"],lvl:"Intermediate"},
+  {room:"204",title:"Fun with Canvas Code Components",who:"Brian Perry",org:"Actual AI",tracks:["fe"],lvl:"Intermediate"}]},
+ {start:"5:00",end:"7:00",all:{title:"After party",where:"Gaige Hall 200"}}
+];
+// Demo clock: pretend it is Saturday 10:20 AM so "now" states are visible.
+const DEMO_NOW = "10:20";
+function mins(t){let [h,m]=t.split(":").map(Number); if(h<8)h+=12; return h*60+m;}
+function slotState(s){const n=mins(DEMO_NOW); if(n>=mins(s.end))return "past"; if(n>=mins(s.start))return "now"; return "next";}
+
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const vt=fn=>(!reduce&&document.startViewTransition)?document.startViewTransition(fn):fn();
+const roomName=r=>r==="Auditorium"?"Auditorium":"Gaige "+r;
+const fmt=m=>{const h=Math.floor(m/60),mm=m%60;return `${h>12?h-12:h}:${String(mm).padStart(2,"0")}`;};
+
+/* ---------- the year on one track; Saturday is stretched so each hour has room ---------- */
+const P={beforeEnd:420, friEnd:500, satEnd:900};
+const SAT0=mins("8:00")-30, SAT1=19*60;   // 7:30 AM to 7:00 PM
+const D=(m,d)=>new Date(2027,m,d);
+const CFP_CLOSE=D(7,15), SCHED=D(8,20);
+function at(v){
+  if(v<P.beforeEnd){const d=D(5,1+Math.round(v/P.beforeEnd*164));return {phase:"before",date:d,label:d.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})};}
+  if(v<P.friEnd) return {phase:"friday",label:"Friday, November 12"};
+  if(v<P.satEnd){const m=Math.round(SAT0+(v-P.friEnd)/(P.satEnd-P.friEnd)*(SAT1-SAT0));const h=Math.floor(m/60);return {phase:"saturday",m,clock:fmt(m),label:`Saturday, November 13, ${fmt(m)} ${h>=12?"PM":"AM"}`};}
+  return {phase:"after",label:"After camp"};
+}
+const vSat=t=>P.friEnd+(mins(t)-SAT0)/(SAT1-SAT0)*(P.satEnd-P.friEnd);
+const TARGET=Math.round(vSat("10:20"));
+const seg=(a,b,c)=>`<span class="seg ${c}" style="left:${a/10}%;width:${(b-a)/10}%"></span>`;
+let tk=seg(0,P.beforeEnd-4,"before")+seg(P.beforeEnd,P.satEnd-4,"during")+seg(P.satEnd,1000,"after");
+["Jun","Jul","Aug","Sep","Oct","Nov"].forEach((m,i)=>tk+=`<span class="tick" style="left:${(i/5.5*P.beforeEnd)/10}%">${m}</span>`);
+tk+=`<span class="tick" style="left:${(P.beforeEnd+40)/10}%">Fri</span>`;
+["9:00","12:00","3:00","6:00"].forEach(t=>tk+=`<span class="tick" style="left:${vSat(t)/10}%">Sat ${t}</span>`);
+tk+=`<span class="tick" style="left:95%">Dec</span>`;
+track.insertAdjacentHTML("afterbegin",tk);
+
+/* ---------- Saturday helpers ---------- */
+const stAt=(s,m)=>m>=mins(s.end)?"past":m>=mins(s.start)?"now":"next";
+const curSlot=m=>SLOTS.find(s=>stAt(s,m)==="now");
+const nextSlot=m=>SLOTS.find(s=>stAt(s,m)==="next");
+const desc=s=>s.talks?`${s.talks.length} sessions`:s.keynote?`the keynote, ${s.keynote.title}`:s.all.title.toLowerCase();
+
+/* ---------- the chin: only what matters right now ---------- */
+function chin(s){
+  if(s.phase==="before"){
+    if(s.date<CFP_CLOSE) return {k:"bA",when:"Before camp",h:"Session proposals close August 15.",p:"Tickets for November 12 and 13 are on sale now.",ctas:[["Propose a session","btn-red"],["Get a ticket","btn-ghost"]]};
+    if(s.date<SCHED) return {k:"bB",when:"Before camp",h:"Proposals are in review. The schedule is out September 20.",p:"Tickets for November 12 and 13 are on sale now.",ctas:[["Get a ticket","btn-red"]]};
+    return {k:"bC",when:"Before camp",h:"Camp is November 12 and 13 at Rhode Island College.",p:"The schedule is out. Pick your sessions, then get a ticket.",ctas:[["Get a ticket","btn-red"],["See the schedule","btn-ghost","#agenda"]]};
+  }
+  if(s.phase==="friday") return {k:"fri",live:true,when:"Today",h:"Training, the summit and contribution day, all in Gaige Hall.",p:"Check in at the Gaige Hall lobby.",ctas:[["Find your room","btn-red"],["Map","btn-ghost"]]};
+  if(s.phase==="after") return {k:"aft",when:"After camp",h:"Recordings from Saturday are up.",p:"See you next November.",ctas:[["Watch the sessions","btn-red"],["Save the date","btn-ghost"]]};
+  const m=s.m, c=curSlot(m), n=nextSlot(m);
+  if(m<mins("8:00")) return {k:"s-pre",live:true,when:"Today",h:"Registration opens at 8:00 in the Gaige Hall lobby.",p:"Breakfast is in Gaige 200.",ctas:[["Map","btn-red"]]};
+  if(!c&&!n) return {k:"s-end",when:"Today",h:"That's a wrap. Thank you for coming.",p:"Recordings will be up next week.",ctas:[]};
+  if(!c) return {k:"s-gap-"+n.start,live:true,when:"Up next",h:`Next at ${n.start}: ${desc(n)}.`,p:n.talks?`In Gaige 201 to 204${n.talks.some(t=>t.room==="Auditorium")?" and the Auditorium":""}.`:n.keynote?"In the Auditorium.":n.all.where+".",ctas:[["See what's next","btn-red","#cal"],["Map","btn-ghost"]]};
+  const left=mins(c.end)-m;
+  if(c.talks) return {k:"s-"+c.start,live:true,when:`Now, ${left} minutes left`,h:`${c.talks.length} sessions are on until ${c.end}.`,p:n?`Next at ${n.start}: ${desc(n)}.`:"",ctas:[["What's on now","btn-red","#cal"],["Map","btn-ghost"]]};
+  if(c.keynote) return {k:"s-"+c.start,live:true,when:"Now",h:`The keynote is on in the Auditorium until ${c.end}.`,p:`${c.keynote.title}, by ${c.keynote.who}.`,ctas:[["Map","btn-red"]]};
+  return {k:"s-"+c.start,live:true,when:"Now",h:`${c.all.title}, until ${c.end}.`,p:`${c.all.where}.${n?` Next at ${n.start}: ${desc(n)}.`:""}`,ctas:[["Map","btn-red"]]};
+}
+
+/* ---------- the board under the calendar ---------- */
+let starred=new Set(["Overnight Website Challenge: How Drupal Spent 10 Years Making the Perfect Rapid Development Kit","The Work We Want"]);
+let active=new Set();
+const starSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>';
+const allTalks=()=>{const a=[];SLOTS.forEach(s=>{(s.talks||[]).forEach(t=>a.push({...t,time:s.start,end:s.end}));if(s.keynote)a.push({...s.keynote,tracks:["hu"],time:s.start,end:s.end});});return a;};
+const row=(t,i,time)=>{const dim=active.size&&!(t.tracks||[]).some(k=>active.has(k));return `<div class="sess ${dim?"dim":""}" style="--i:${i}" data-tracks="${(t.tracks||[]).join(" ")}"><div class="rm">${t.room==="Auditorium"?"Aud":t.room}<small>${time||"Gaige Hall"}</small></div><div><b>${t.title}</b><span>${t.who}</span></div><button class="star" type="button" aria-pressed="${starred.has(t.title)}" aria-label="Add ${t.title.replace(/"/g,"&quot;")} to my day" data-t="${t.title.replace(/"/g,"&quot;")}">${starSvg}</button></div>`;};
+const getting=`<div class="panel getting"><h2>Getting around</h2>
+  <a href="#"><strong>Gaige Hall, Rhode Island College</strong><span>600 Mt Pleasant Ave, Providence</span></a>
+  <a href="#"><strong>Parking</strong><span>Where to park on campus</span></a>
+  <a href="#"><strong>Code of conduct</strong><span>Report a concern to any organizer</span></a>
+  <a href="#"><strong>#nedcamp on Drupal Slack</strong><span>Talk to other attendees</span></a></div>`;
+function myDayPanel(fromM){
+  const mine=allTalks().filter(t=>starred.has(t.title)&&(fromM==null||mins(t.end)>fromM));
+  return `<div class="panel"><h2>My day <span class="count" id="count">${starred.size}</span></h2>${mine.map((t,i)=>row(t,i,t.time)).join("")||'<p class="lede">Star a session to add it here.</p>'}</div>`;
+}
+function board(s){
+  if(s.phase==="before"){
+    const steps=[["Jun 1","Session proposals open",D(5,1)],["Aug 15","Proposals close",CFP_CLOSE],["Sep 20","Schedule published",SCHED],["Nov 12","Camp begins",D(10,12)]];
+    const on=steps.findIndex(x=>s.date<x[2]);
+    return `<div class="panel"><h2>Key dates</h2><ol class="steps">${steps.map((x,i)=>`<li style="--i:${i}" class="${s.date>=x[2]?"done":i===on?"on":""}"><b>${x[0]}</b>${x[1]}</li>`).join("")}</ol></div>
+    <div class="panel"><h2>New to Drupal?</h2><div class="card" style="--i:1"><h3>Most sessions are for every level</h3><p>Volunteers at the front desk will point you to the right room.</p></div><div class="card" style="--i:2"><h3>Friday is hands-on</h3><p>Training, the summit, and contribution day with mentors.</p></div></div>
+    <div class="panel dark"><h2>Two days in Providence</h2><p class="lede">November 12 and 13, 2027. Rhode Island College, Gaige Hall.</p><div style="display:grid;gap:10px;margin-top:14px"><a class="btn btn-red" href="#">Get a ticket</a>${s.date<CFP_CLOSE?'<a class="btn btn-ghost" href="#">Propose a session</a>':""}</div></div>`;
+  }
+  if(s.phase==="friday") return `<div class="panel"><h2>Today in Gaige Hall</h2>
+    <div class="card" style="--i:0"><h3>Training</h3><p>Full-day workshops. Bring a laptop.</p></div>
+    <div class="card" style="--i:1"><h3>Summit</h3><p>Talks and discussion for people who run Drupal teams and programs.</p></div>
+    <div class="card" style="--i:2"><h3>Contribution day</h3><p>Mentors help you land your first Drupal contribution.</p></div></div>${myDayPanel(null)}${getting}`;
+  if(s.phase==="after"){
+    const V=[["The Work We Want","Ethan Marcotte, keynote","58:12"],["You Don't Need JS for That","Aubrey Sambor","41:30"],["Drupal AI Modules Worth Knowing About","Michael Anello","44:05"],["Passing the Drupal Torch","Thomas and Olivia Scola","39:48"]];
+    return `<div class="panel"><h2>Most watched</h2>${V.map(([t,w,d],i)=>`<div class="vid" style="--i:${i}"><div class="thumb"><em>${d}</em></div><div><b>${t}</b><span>${w}</span></div></div>`).join("")}</div>
+    <div class="panel"><h2>Your starred talks</h2>${allTalks().filter(t=>starred.has(t.title)).map((t,i)=>`<div class="vid" style="--i:${i}"><div class="thumb"></div><div><b>${t.title}</b><span>${t.who}</span></div></div>`).join("")}</div>
+    <div class="panel dark"><h2>See you November 2027</h2><p class="lede">Same place, same weekend.</p><div style="display:grid;gap:10px;margin-top:14px"><a class="btn btn-red" href="#">Save the date</a><a class="btn btn-ghost" href="#">Help run next year's camp</a></div></div>`;
+  }
+  const m=s.m, c=curSlot(m), n=nextSlot(m);
+  const ribbon=`<div class="ribbon" id="ribbon">${SLOTS.map(x=>`<span class="r-${stAt(x,m)} ${x.talks?"talk":x.keynote?"key":""}"></span>`).join("")}<i class="mark" id="mark"></i></div><div class="daylbl"><span>8:00</span><span>Lunch</span><span>Keynote</span><span>7:00</span></div>`;
+  const focus=c||n;
+  let main;
+  if(!focus) main=`<p class="lede">That's the end of Saturday.</p>`;
+  else if(focus.talks) main=`<div class="chips" id="chips">${Object.entries(TRACK_NAMES).map(([k,v])=>`<button type="button" data-k="${k}" aria-pressed="${active.has(k)}">${v}</button>`).join("")}</div>${focus.talks.map((t,i)=>row(t,i)).join("")}`;
+  else if(focus.keynote) main=row({...focus.keynote,tracks:["hu"]},0);
+  else main=`<div class="card"><h3>${focus.all.title}</h3><p>${focus.all.where}</p></div>`;
+  const after=n&&n!==focus?n:(focus?nextSlot(mins(focus.end)):null);
+  const nextHtml=after?`<div class="panel dark"><h2>Next at ${after.start}</h2>${after.talks?after.talks.map((t,i)=>row(t,i)).join(""):after.keynote?row({...after.keynote,tracks:["hu"]},0):`<p class="lede">${after.all.title}, ${after.all.where}.</p>`}</div>`:getting;
+  return `<div class="panel">${ribbon}<h2>${c?"Happening now":"Up next"} <small>${c?`until ${c.end}`:focus?`at ${focus.start}`:""}</small></h2>${main}</div>${nextHtml}${myDayPanel(m)}`;
+}
+
+/* ---------- full schedule grid, following the calendar clock ---------- */
+let gh=`<div class="hd">Time</div>`+ROOMS.map(r=>`<div class="hd">${roomName(r)}</div>`).join("");
+SLOTS.forEach((s,si)=>{
+  gh+=`<div class="t" data-s="${si}">${s.start}<small>to ${s.end}</small></div>`;
+  if(s.talks) ROOMS.forEach(r=>{const t=s.talks.find(x=>x.room===r);gh+=t?`<div class="cell" data-s="${si}"><span class="rm-m">${roomName(r)}</span><b>${t.title}</b><span>${t.who}${t.org?", "+t.org:""}</span></div>`:`<div class="cell empty" data-s="${si}"></div>`;});
+  else if(s.keynote) gh+=`<div class="span keynote" data-s="${si}"><em>Keynote in the Auditorium</em><b>${s.keynote.title}</b><span>${s.keynote.who}, ${s.keynote.org}</span></div>`;
+  else gh+=`<div class="span" data-s="${si}"><b>${s.all.title}</b><span>${s.all.where}</span></div>`;
+});
+grid.innerHTML=gh;
+function paintGrid(m){grid.querySelectorAll("[data-s]").forEach(el=>{const st=m==null?"next":stAt(SLOTS[+el.dataset.s],m);el.classList.toggle("past",st==="past");el.classList.toggle("now",st==="now");});}
+
+/* ---------- update everything from the calendar ---------- */
+let lastChin="", lastBoard="";
+function update(v,animate){
+  const s=at(v);
+  when.textContent=s.label; knob.style.left=(v/10)+"%";
+  const c=chin(s);
+  const boardKey=s.phase==="saturday"?"sat-"+((curSlot(s.m)||nextSlot(s.m)||{start:"end"}).start)+(curSlot(s.m)?"n":"x"):c.k.slice(0,3);
+  const paint=()=>{
+    if(c.k!==lastChin){
+      nowMsg.innerHTML=`<p class="when">${c.live?'<span class="live" aria-hidden="true"></span>':""}${c.when}</p><h1>${c.h}</h1>${c.p?`<p>${c.p}</p>`:""}`;
+      chinCtas.innerHTML=c.ctas.map(([t,cl,h])=>`<a class="btn ${cl}" href="${h||"#"}">${t}</a>`).join("");
+      topCta.textContent=s.phase==="before"?"Get a ticket":s.phase==="after"?"Watch sessions":"Map";
+      lastChin=c.k;
+    }
+    if(boardKey!==lastBoard){ boardgrid.innerHTML=board(s); lastBoard=boardKey; }
+    if(s.phase==="saturday") placeMark(s.m);
+  };
+  if(c.k!==lastChin||boardKey!==lastBoard) (animate?vt:f=>f())(paint);
+  else if(s.phase==="saturday"){ const w=nowMsg.querySelector(".when"); if(w&&c.live) w.innerHTML=`<span class="live" aria-hidden="true"></span>${c.when}`; }
+  paintGrid(s.phase==="saturday"?s.m:s.phase==="after"?24*60:null);
+  if(s.phase==="saturday") requestAnimationFrame(()=>placeMark(s.m));
+}
+function placeMark(m){
+  const r=document.getElementById("ribbon"), mk=document.getElementById("mark"); if(!r||!mk)return;
+  const sp=[...r.querySelectorAll("span")]; let i=SLOTS.findIndex(x=>m<mins(x.end)); if(i<0)i=SLOTS.length-1;
+  const s=SLOTS[i], f=Math.max(0,Math.min(1,(m-mins(s.start))/(mins(s.end)-mins(s.start))));
+  mk.style.left=(sp[i].offsetLeft+sp[i].offsetWidth*f)+"px";
+}
+
+/* ---------- interaction ---------- */
+range.addEventListener("input",()=>{stopPlay();update(+range.value,true);});
+boardgrid.addEventListener("click",e=>{
+  const c=e.target.closest(".chips button");
+  if(c){const k=c.dataset.k;active.has(k)?active.delete(k):active.add(k);c.setAttribute("aria-pressed",active.has(k));
+    c.closest(".panel").querySelectorAll(".sess").forEach(r=>r.classList.toggle("dim",active.size>0&&!r.dataset.tracks.split(" ").some(k=>active.has(k))));return;}
+  const b=e.target.closest(".star"); if(!b)return;
+  const t=b.dataset.t, on=!starred.has(t); on?starred.add(t):starred.delete(t);
+  boardgrid.querySelectorAll(".star").forEach(x=>{if(x.dataset.t===t)x.setAttribute("aria-pressed",on);});
+  const count=document.getElementById("count");
+  const land=()=>{lastBoard="";update(+range.value,false);const n=document.getElementById("count");if(n){n.classList.remove("bump");void n.offsetWidth;n.classList.add("bump");}};
+  if(on&&count&&!reduce){
+    const a=b.getBoundingClientRect(), z=count.getBoundingClientRect();
+    const f=document.createElement("div"); f.className="flyer"; f.innerHTML=starSvg.replace("<svg",'<svg fill="currentColor"'); document.body.appendChild(f);
+    f.animate([{left:a.left+11+"px",top:a.top+11+"px",transform:"scale(1)"},{left:(a.left+z.left)/2+"px",top:Math.min(a.top,z.top)-70+"px",transform:"scale(1.4)",offset:.45},{left:z.left+"px",top:z.top+"px",transform:"scale(.5)"}],{duration:650,easing:"cubic-bezier(.4,0,.2,1)"}).onfinish=()=>{f.remove();land();};
+  } else land();
+});
+
+/* play the year once on load, stopping at Saturday 10:20 */
+let raf=null;
+function play(){
+  stopPlay(); const t0=performance.now(), dur=7000, to=TARGET;
+  const ease=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+  const step=t=>{const p=Math.min(1,(t-t0)/dur);const v=Math.round(to*ease(p));range.value=v;update(v,true);if(p<1)raf=requestAnimationFrame(step);else raf=null;};
+  raf=requestAnimationFrame(step);
+}
+function stopPlay(){if(raf){cancelAnimationFrame(raf);raf=null;}}
+replay.onclick=play;
+range.value=reduce?TARGET:0; update(+range.value,false);
+if(!reduce) setTimeout(play,700);
+addEventListener("resize",()=>{const s=at(+range.value);if(s.phase==="saturday")placeMark(s.m);});
+</script>
+</body>
+</html>
