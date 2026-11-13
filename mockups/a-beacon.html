@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup A: Beacon. New England Drupal Camp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#040234; --lamp:#009cde; --lamp-ink:#006c9c; --signal:#bc0a1c;
+  --fog:#eef5fb; --paper:#fff; --ink:#040234; --muted:#4a5070; --line:#d6e0ec;
+  --display:"Barlow Condensed",system-ui,sans-serif; --body:"Public Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--body);color:var(--ink);background:var(--paper);font-size:17px;line-height:1.5}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--lamp);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding-left:28px;padding-right:28px}
+
+/* logo bar: light ground so the official logo sits as designed */
+.top{background:#fff;position:relative;z-index:5}
+.top .wrap{display:flex;align-items:center;gap:32px;height:104px}
+.brand-card{align-self:flex-start;background:#fff;padding:20px 24px 22px;border-radius:0 0 12px 12px;position:relative;z-index:6;box-shadow:0 18px 40px rgba(4,2,52,.18)}
+.logo-img{width:210px;height:auto;display:block}
+.top nav{display:flex;gap:28px;margin-left:auto;font-weight:700;font-size:15px}
+.top nav a{text-decoration:none;position:relative;padding:6px 0}
+.top nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;background:var(--signal);transition:right .25s ease}
+.top nav a:hover::after,.top nav a:focus-visible::after{right:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:4px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:var(--body);white-space:nowrap;transition:transform .15s ease,background-color .2s,border-color .2s}
+.btn:active{transform:translateY(1px)}
+.btn-signal{background:var(--signal);color:#fff}
+.btn-signal:hover{background:#9b0817}
+.btn-ghost{border-color:rgba(255,255,255,.5);color:#fff}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+.top .btn{min-height:42px;font-size:15px;padding:0 16px}
+.menu{display:none;background:#fff;color:var(--night);border-color:var(--night)}
+
+/* hero: a working lighthouse */
+.hero{background:var(--night);color:#fff;position:relative;overflow:hidden;isolation:isolate}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr 1fr;gap:40px;min-height:620px;align-items:center;padding-top:140px;padding-bottom:56px}
+.rays{position:absolute;right:-410px;top:-330px;width:900px;height:900px;z-index:-1;pointer-events:none}
+.rays line{stroke:var(--lamp);stroke-width:1.1;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1.1s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.beam{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:repeating-conic-gradient(from calc(var(--a,200deg) - 9deg) at var(--lx) var(--ly),rgba(0,156,222,.36) 0deg,rgba(0,156,222,.08) 14deg,transparent 18deg,transparent 120deg);
+  opacity:0;transition:opacity 1s}
+.lit .beam{opacity:1}
+.lamp{position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px rgba(0,156,222,.35),0 0 60px 20px rgba(0,156,222,.55);transform:translate(-50%,-50%) scale(0);z-index:-1;transition:transform .5s cubic-bezier(.3,1.6,.5,1) .2s}
+.lit .lamp{transform:translate(-50%,-50%) scale(1)}
+.hero h1{position:relative;font-family:var(--display);font-weight:700;font-size:clamp(60px,8.4vw,124px);line-height:.88;margin:0 0 22px;letter-spacing:-.005em}
+.hero h1 .lit-copy{position:absolute;inset:0;color:var(--lamp);pointer-events:none;opacity:0;transition:opacity 1s;
+  -webkit-mask-image:repeating-conic-gradient(from calc(var(--a,200deg) - 9deg) at var(--mx) var(--my),#000 0deg,#000 14deg,transparent 18deg,transparent 120deg);
+          mask-image:repeating-conic-gradient(from calc(var(--a,200deg) - 9deg) at var(--mx) var(--my),#000 0deg,#000 14deg,transparent 18deg,transparent 120deg)}
+.lit h1 .lit-copy{opacity:1}
+.when{font-family:var(--display);font-weight:600;font-size:32px;line-height:1.1;margin:0 0 8px;color:var(--lamp)}
+.where{margin:0 0 30px;font-size:18px;color:#d7defa;max-width:42ch}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.state-switch{display:inline-flex;gap:2px;background:rgba(255,255,255,.08);padding:4px;border-radius:6px;margin-bottom:28px;position:relative}
+.state-switch button{position:relative;z-index:1;background:none;border:0;color:#c9d1f5;font:700 14px var(--body);padding:8px 14px;border-radius:4px;cursor:pointer;transition:color .25s}
+.state-switch button[aria-pressed=true]{color:var(--night)}
+.state-switch .knob{position:absolute;top:4px;bottom:4px;border-radius:4px;background:#fff;transition:left .35s cubic-bezier(.3,1.3,.5,1),width .35s cubic-bezier(.3,1.3,.5,1)}
+.mock-note{font-size:13px;color:#9fa9da;margin:0 0 8px}
+
+.status{background:var(--paper);color:var(--ink);border-radius:10px;padding:24px 26px 20px;box-shadow:0 30px 80px rgba(0,0,0,.35);view-transition-name:statuscard}
+.status h2{font-family:var(--display);font-size:24px;font-weight:600;margin:0 0 4px}
+.drain{height:4px;background:var(--fog);border-radius:2px;overflow:hidden;margin:6px 0 8px}
+.drain i{display:block;height:100%;background:var(--lamp);transform-origin:left;transition:transform 1.6s cubic-bezier(.2,.7,.2,1) .4s}
+.drain-l{font-size:13px;color:var(--muted);margin:0 0 6px}
+.status ol{list-style:none;margin:0;padding:0}
+.status li{display:grid;grid-template-columns:58px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);opacity:0;transform:translateY(8px);animation:rise .45s ease forwards;animation-delay:calc(var(--i) * 70ms + .3s)}
+.status li:first-child{border-top:0}
+@keyframes rise{to{opacity:1;transform:none}}
+.status time{font-family:var(--display);font-weight:600;font-size:20px;line-height:1.2}
+.status .live{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--signal);margin-right:8px;vertical-align:3px;animation:blink 2s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+.status .room{color:var(--muted);font-size:15px}
+.status .foot{margin:12px 0 0;font-size:15px;color:var(--muted)}
+
+.practical{background:var(--fog)}
+.practical .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.practical a{padding:20px 20px 20px 0;text-decoration:none;display:block}
+.practical a+a{padding-left:20px;border-left:1px solid var(--line)}
+.practical strong{display:block;font-size:16px}
+.practical span{color:var(--muted);font-size:15px}
+.practical a:hover strong{text-decoration:underline;text-underline-offset:3px}
+
+.agenda{padding-top:72px;padding-bottom:88px}
+.agenda-head{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:22px}
+.agenda h2{font-family:var(--display);font-size:56px;line-height:1;margin:0}
+.days{display:flex;margin-top:10px}
+.days a{font-weight:700;font-size:15px;padding:6px 0;margin-right:22px;text-decoration:none;color:var(--muted);border-bottom:3px solid transparent}
+.days a[aria-current]{color:var(--ink);border-color:var(--signal)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;max-width:620px;justify-content:flex-end}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:4px;padding:6px 12px;font:700 14px var(--body);cursor:pointer;color:var(--ink);min-height:36px;transition:background-color .2s,color .2s,border-color .2s}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed=true]{background:var(--night);border-color:var(--night);color:#fff}
+.grid{display:grid;grid-template-columns:96px repeat(5,1fr);border-top:2px solid var(--ink)}
+.grid .hd{font-weight:700;font-size:14px;padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+.t{padding:14px 12px 14px 0;font-family:var(--display);font-weight:600;font-size:22px;line-height:1.05;border-bottom:1px solid var(--line)}
+.t small{display:block;font-weight:500;font-size:15px;color:var(--muted)}
+.t.now{color:var(--lamp-ink)}
+.t.now::after{content:"Now";display:block;margin-top:6px;font:700 12px var(--body);color:#fff;background:var(--signal);width:max-content;padding:2px 7px;border-radius:3px}
+.cell{border-bottom:1px solid var(--line);border-left:1px solid var(--line);padding:12px;min-height:118px;position:relative;transition:opacity .3s ease,background-color .3s}
+.cell.empty{background:repeating-linear-gradient(135deg,transparent 0 8px,#f2f6fb 8px 9px)}
+.cell.now{background:#f1f9fe}
+.cell.past{opacity:.72}
+.cell.dim{opacity:.3}
+.cell::before{content:"";position:absolute;left:-1px;top:0;width:3px;height:100%;background:var(--lamp);transform:scaleY(0);transform-origin:top;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.cell.match::before{transform:scaleY(1)}
+.nowline{position:absolute;left:0;right:0;height:2px;background:var(--signal);pointer-events:none;z-index:1;opacity:.55}
+.talk{all:unset;cursor:pointer;display:block;height:100%;border-radius:4px;position:relative;z-index:2}
+.talk:focus-visible{outline:3px solid var(--lamp);outline-offset:4px}
+.talk b{display:block;font-size:15.5px;line-height:1.3;margin-bottom:6px;transition:color .2s}
+.talk:hover b{color:var(--lamp-ink)}
+.talk .who{display:block;font-size:14px;color:var(--muted)}
+.talk .tags{display:block;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--lamp-ink)}
+.talk .room-m{display:none}
+.span{grid-column:2 / -1;border-bottom:1px solid var(--line);border-left:1px solid var(--line);padding:14px 16px;display:flex;gap:12px;align-items:baseline;background:var(--fog)}
+.span b{font-size:16px}
+.span span{color:var(--muted);font-size:15px}
+.span.past{opacity:.72}
+.span.keynote{background:var(--night);color:#fff;padding:26px 22px;position:relative;overflow:hidden;display:block}
+.span.keynote::after{content:"";position:absolute;inset:0;background:conic-gradient(from 250deg at 92% 120%,rgba(0,156,222,.35) 0deg,transparent 16deg);pointer-events:none}
+.span.keynote .talk b{font-family:var(--display);font-size:40px;font-weight:700;line-height:1;margin:4px 0;color:#fff}
+.span.keynote .who{color:#c9d6ff}
+.span.keynote em{font-style:normal;font-weight:700;color:var(--lamp);font-size:14px}
+
+dialog{border:0;border-radius:12px;padding:0;max-width:560px;width:calc(100% - 32px);box-shadow:0 24px 60px rgba(4,2,52,.35)}
+dialog::backdrop{background:rgba(4,2,52,.55)}
+dialog[open]{animation:pop .32s cubic-bezier(.2,.9,.3,1.2)}
+dialog[open]::backdrop{animation:fade .3s ease}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.96)}}
+@keyframes fade{from{opacity:0}}
+.dlg{padding:28px}
+.dlg .meta{display:flex;gap:18px;flex-wrap:wrap;font-weight:700;color:var(--lamp-ink);margin-bottom:10px}
+.dlg h3{font-family:var(--display);font-size:36px;line-height:1.02;margin:0 0 14px}
+.dlg p{margin:0 0 18px;color:var(--muted)}
+.dlg .row{display:flex;gap:10px;flex-wrap:wrap}
+.btn-ink{background:var(--night);color:#fff}
+.btn-line{border-color:var(--line);color:var(--ink);background:#fff}
+
+footer{background:var(--night);color:#cfd6ff;padding:44px 0;font-size:15px}
+footer .wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:28px}
+footer strong{color:#fff;display:block;margin-bottom:4px}
+
+::view-transition-old(statuscard){animation:.22s ease both vt-out}
+::view-transition-new(statuscard){animation:.42s cubic-bezier(.2,.7,.2,1) both vt-in}
+@keyframes vt-out{to{opacity:0;transform:translateY(-10px)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(14px)}}
+
+@media (max-width:900px){
+  body{font-size:16px}
+  .top nav{display:none}
+  .top .wrap{height:84px;gap:10px}
+  .logo-img{width:120px}
+  .brand-card{padding:12px 14px 14px}
+  .top #topCta{margin-left:auto}
+  .menu{display:inline-flex}
+  .hero .wrap{grid-template-columns:1fr;min-height:0;padding-top:66px;padding-bottom:28px;gap:20px}
+  .rays{width:620px;height:620px;right:-330px;top:150px;transform:none}
+  .hero h1{font-size:58px;margin-bottom:14px}
+  .is-during .hero h1{font-size:34px}
+  .is-during .hero h1 br{display:none}
+  .is-during .where,.is-during .ctas,.mock-note{display:none}
+  .when{font-size:24px}
+  .state-switch button{padding:8px 10px;font-size:13px}
+  .state-switch{margin-bottom:20px}
+  .ctas .btn{flex:1;padding:0 12px;font-size:15px}
+  .practical .wrap{grid-template-columns:1fr 1fr}
+  .practical a,.practical a+a{padding:14px 10px;border-left:0;border-top:1px solid var(--line)}
+  .agenda{padding-top:44px}
+  .agenda h2{font-size:42px}
+  .filters{justify-content:flex-start}
+  .grid{grid-template-columns:1fr}
+  .grid .hd{display:none}
+  .t{padding:22px 0 8px;border-bottom:0}
+  .t small{display:inline;margin-left:6px}
+  .t.now::after{display:inline-block;margin:0 0 0 10px;vertical-align:4px}
+  .cell{border-left:0;min-height:0;padding:12px 0 12px 12px}
+  .cell.empty{display:none}
+  .talk .room-m{display:inline-block;font-size:12px;font-weight:700;background:var(--night);color:#fff;padding:1px 7px;border-radius:3px;margin-bottom:6px}
+  .span{grid-column:1;border-left:0}
+  .span.keynote .talk b{font-size:30px}
+  .nowline{display:none}
+  footer .wrap{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .rays line{animation:none;stroke-dashoffset:0}
+  .status li{animation:none;opacity:1;transform:none}
+  .status .live,dialog[open],dialog[open]::backdrop{animation:none}
+  *{transition-duration:0s!important}
+}
+</style>
+</head>
+<body class="is-during">
+<header class="top">
+  <div class="wrap">
+    <a class="brand-card" href="#" aria-label="New England Drupal Camp home"><svg class="logo-img" role="img" aria-label="New England Drupal Camp" width="210" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 638.29 542.6"><defs><style>.cls-1,.cls-5{fill:none;}.cls-2,.cls-8{fill:#040234;}.cls-3{fill:#bc0a1c;}.cls-4{clip-path:url(#clip-path);}.cls-5{stroke:#009cde;stroke-miterlimit:10;stroke-width:2px;}.cls-6,.cls-7{fill:#fff;}.cls-7,.cls-8{fill-rule:evenodd;}</style><clipPath id="clip-path" transform="translate(-280.85 -127.6)"><path class="cls-1" d="M622.32,384.67c-55.22,12.25-107.84-22.22-118.81-77.51-5.33-26.84.55-51.82,14.64-75.06,7.73-12.7,17.08-24.13,27-35.1,7.32-8.09,14.83-16,22.08-24.17,15.82-17.77,18.29-21.76,27.39-43,6.82,18.43,20.36,31.53,34,44.54,13.18,12.61,27,24.59,39,38.38,14.24,16.37,25.4,34.39,29.58,56C707.66,322.93,673.67,373.28,622.32,384.67Z"/></clipPath></defs><path class="cls-2" d="M280.85,577.77a1.69,1.69,0,0,1,1.89-1.89H311c11.09,0,17,6,17,17.1v60.24c0,11.08-5.89,17-17,17H282.74a1.64,1.64,0,0,1-1.89-1.89Zm26.88,76.86c3.07,0,4.72-1.53,4.72-4.71V596.28c0-3.19-1.65-4.84-4.72-4.84H296.89v63.19Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M388.26,621.63c0,7.89-2.95,13.08-8.61,15.56l8.14,30.88c.35,1.42-.36,2.13-1.65,2.13H373.87a1.85,1.85,0,0,1-2-1.65L364,638.6h-8.13v29.71A1.74,1.74,0,0,1,354,670.2H341.69a1.74,1.74,0,0,1-1.89-1.89V577.77a1.74,1.74,0,0,1,1.89-1.89h29.59c11.08,0,17,5.9,17,17ZM367.51,623c3.06,0,4.71-1.65,4.71-4.72V596.16c0-3.07-1.65-4.72-4.71-4.72H355.84V623Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M444.85,575.88a2.36,2.36,0,0,1,2.35,2.36v75c0,11.08-5.89,17-17,17H417c-11.08,0-17-5.9-17-17v-75a2.36,2.36,0,0,1,2.36-2.36h11.31a2.36,2.36,0,0,1,2.36,2.36v71.68c0,3.18,1.65,4.71,4.72,4.71h6.13c3.06,0,4.71-1.53,4.71-4.71V578.24a2.36,2.36,0,0,1,2.36-2.36Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M459,577.77a1.73,1.73,0,0,1,1.88-1.89h28.3c11.08,0,17,5.9,17,17v28.77c0,11-5.89,17-17,17H475v29.71a1.69,1.69,0,0,1-1.89,1.89H460.88a1.73,1.73,0,0,1-1.88-1.89ZM485.4,623c3.19,0,4.72-1.77,4.72-4.72V596.16c0-3.07-1.53-4.72-4.72-4.72H475V623Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M556.38,670.2a1.82,1.82,0,0,1-1.89-1.65l-3.3-17.22h-21L527,668.55a1.8,1.8,0,0,1-1.88,1.65H512.52c-1.29,0-1.88-.71-1.53-2l19.57-90.66a1.83,1.83,0,0,1,2-1.65H549a1.84,1.84,0,0,1,2,1.65l19.57,90.66c.23,1.3-.24,2-1.65,2ZM540.7,596.51l-7.55,41.15h15.09Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M597.17,654.63h28.06a1.69,1.69,0,0,1,1.89,1.89v11.79a1.64,1.64,0,0,1-1.89,1.89H583a1.68,1.68,0,0,1-1.88-1.89V577.77a1.74,1.74,0,0,1,1.88-1.89h12.27a1.68,1.68,0,0,1,1.88,1.89Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M715.66,605.59a1.74,1.74,0,0,1-1.89,1.89H702a1.69,1.69,0,0,1-1.89-1.89v-9.43c0-3.07-1.65-4.72-4.71-4.72h-6.13c-3.18,0-4.72,1.65-4.72,4.72v53.76c0,3.18,1.65,4.71,4.72,4.71h6.13c3.06,0,4.71-1.53,4.71-4.71v-9.43A1.69,1.69,0,0,1,702,638.6h11.79a1.74,1.74,0,0,1,1.89,1.89v12.73c0,11.08-6,17-17,17h-13.2c-11.09,0-17.1-5.9-17.1-17V592.86c0-11.08,6-17,17.1-17h13.2c11,0,17,5.9,17,17Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M770.59,670.2a1.8,1.8,0,0,1-1.88-1.65l-3.3-17.22h-21l-3.18,17.22a1.82,1.82,0,0,1-1.89,1.65H726.74c-1.3,0-1.89-.71-1.53-2l19.57-90.66a1.83,1.83,0,0,1,2-1.65h16.39a1.83,1.83,0,0,1,2,1.65l19.57,90.66c.24,1.3-.23,2-1.65,2Zm-15.67-73.69-7.55,41.15h15.09Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M857.84,575.88a2.12,2.12,0,0,1,2.36,2.36v89.6a2.12,2.12,0,0,1-2.36,2.36h-11a2.12,2.12,0,0,1-2.36-2.36V614.79h-.83L832,668.07a2.45,2.45,0,0,1-2.59,2.13h-5.78a2.45,2.45,0,0,1-2.59-2.13l-11.67-53.28h-.83v53.05a2.12,2.12,0,0,1-2.36,2.36H795.36a2.12,2.12,0,0,1-2.36-2.36v-89.6a2.12,2.12,0,0,1,2.36-2.36h15.56a2.44,2.44,0,0,1,2.59,2.12l13.09,58.72L839.69,578a2.45,2.45,0,0,1,2.59-2.12Z" transform="translate(-280.85 -127.6)"/><path class="cls-2" d="M872,577.77a1.74,1.74,0,0,1,1.89-1.89h28.29c11.08,0,17,5.9,17,17v28.77c0,11-5.9,17-17,17H888v29.71a1.68,1.68,0,0,1-1.88,1.89H873.88a1.74,1.74,0,0,1-1.89-1.89ZM898.4,623c3.18,0,4.71-1.77,4.71-4.72V596.16c0-3.07-1.53-4.72-4.71-4.72H888V623Z" transform="translate(-280.85 -127.6)"/><rect class="cls-3" x="1.61" y="416.79" width="83.25" height="7.51"/><rect class="cls-3" x="548.48" y="416.79" width="83.25" height="7.51"/><path class="cls-3" d="M409.31,562.17h-4.52l-20.91-17.6a20.05,20.05,0,0,1-2.37-2.32c.18,1.84.28,3.3.28,4.36v15.56h-6V533.7h4.52l20,16.77a33,33,0,0,1,3.25,3.09c-.18-2.65-.27-4.28-.27-4.91V533.7h5.95Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M451.84,562.17h-29.4V533.7h29.13v4.86H429.06v6.34h13.13v4.86H429.06v7.06h22.78Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M504.36,533.7l-11,28.47h-4.47l-7.83-19.7-7.95,19.7h-4.57l-11-28.47h6.84l7.22,19.09,7.56-19.09h4.63l7.73,19.09,6.89-19.09Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M561.78,562.17h-29.4V533.7H561.5v4.86H539v6.34h13.13v4.86H539v7.06h22.78Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M606.07,562.17h-4.52l-20.91-17.6a20.05,20.05,0,0,1-2.37-2.32c.19,1.84.28,3.3.28,4.36v15.56h-6V533.7h4.52l20,16.77a31.9,31.9,0,0,1,3.25,3.09c-.18-2.65-.27-4.28-.27-4.91V533.7h6Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M652.36,555.44q0,4-1.52,5.35c-1,.92-2.86,1.38-5.55,1.38H625.66q-4,0-5.55-1.38t-1.51-5.35v-15c0-2.64.5-4.43,1.51-5.35s2.86-1.38,5.55-1.38h19.63c2.84,0,4.72.49,5.66,1.47s1.41,2.86,1.41,5.65L645.9,542v-3.2H625.21v18H645.9v-6.35H635.09v-4.85h17.27Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M693,562.17H665V533.7h6.62v23.12H693Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M733.61,562.17h-7.45l-3.42-6.24h-18l-3.31,6.24h-6.61l16.1-28.47h6.4ZM720,550.8l-6.12-11.58-6.34,11.58Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M774.81,562.17h-4.52l-20.9-17.6a19.42,19.42,0,0,1-2.38-2.32c.19,1.84.28,3.3.28,4.36v15.56h-6V533.7h4.53l20,16.77a31.9,31.9,0,0,1,3.25,3.09c-.18-2.65-.27-4.28-.27-4.91V533.7h5.95Z" transform="translate(-280.85 -127.6)"/><path class="cls-3" d="M822.53,547.77q0,8.28-6.29,12.19-3.59,2.2-11.69,2.21H787.94V533.7h18.32q7.4,0,11.58,3.31Q822.54,540.66,822.53,547.77Zm-6.84-.11q0-8.88-9.38-8.88H794.56v18h8.55q6.07,0,8.83-1.55Q815.69,553.18,815.69,547.66Z" transform="translate(-280.85 -127.6)"/><g class="cls-4"><line class="cls-5" x1="318.17" y1="141.09" x2="319.48" y2="0.01"/><line class="cls-5" x1="318.17" y1="141.09" x2="332.3" y2="0.71"/><line class="cls-5" x1="318.17" y1="141.09" x2="346.28" y2="2.83"/><line class="cls-5" x1="318.17" y1="141.09" x2="359.98" y2="6.34"/><line class="cls-5" x1="318.17" y1="141.09" x2="373.27" y2="11.2"/><line class="cls-5" x1="318.17" y1="141.09" x2="385.99" y2="17.37"/><line class="cls-5" x1="318.17" y1="141.09" x2="398.04" y2="24.79"/><line class="cls-5" x1="318.17" y1="141.09" x2="409.28" y2="33.37"/><line class="cls-5" x1="318.17" y1="141.09" x2="419.61" y2="43.03"/><line class="cls-5" x1="318.17" y1="141.09" x2="428.92" y2="53.68"/><line class="cls-5" x1="318.17" y1="141.09" x2="437.11" y2="65.21"/><line class="cls-5" x1="318.17" y1="141.09" x2="444.11" y2="77.5"/><line class="cls-5" x1="318.17" y1="141.09" x2="449.85" y2="90.43"/><line class="cls-5" x1="318.17" y1="141.09" x2="454.26" y2="103.86"/><line class="cls-5" x1="318.17" y1="141.09" x2="457.3" y2="117.68"/><line class="cls-5" x1="318.17" y1="141.09" x2="458.95" y2="131.72"/><line class="cls-5" x1="318.17" y1="141.09" x2="459.18" y2="145.87"/><line class="cls-5" x1="318.17" y1="141.09" x2="457.99" y2="159.96"/><line class="cls-5" x1="318.17" y1="141.09" x2="455.4" y2="173.86"/><line class="cls-5" x1="318.17" y1="141.09" x2="451.43" y2="187.44"/><line class="cls-5" x1="318.17" y1="141.09" x2="446.12" y2="200.55"/><line class="cls-5" x1="318.17" y1="141.09" x2="439.52" y2="213.06"/><line class="cls-5" x1="318.17" y1="141.09" x2="431.71" y2="224.85"/><line class="cls-5" x1="318.17" y1="141.09" x2="422.75" y2="235.79"/><line class="cls-5" x1="318.17" y1="141.09" x2="412.74" y2="245.79"/><line class="cls-5" x1="318.17" y1="141.09" x2="401.78" y2="254.73"/><line class="cls-5" x1="318.17" y1="141.09" x2="389.99" y2="262.53"/><line class="cls-5" x1="318.17" y1="141.09" x2="377.47" y2="269.11"/><line class="cls-5" x1="318.17" y1="141.09" x2="267.34" y2="272.7"/><line class="cls-5" x1="318.17" y1="141.09" x2="254.42" y2="266.95"/><line class="cls-5" x1="318.17" y1="141.09" x2="242.14" y2="259.93"/><line class="cls-5" x1="318.17" y1="141.09" x2="230.62" y2="251.72"/><line class="cls-5" x1="318.17" y1="141.09" x2="219.98" y2="242.4"/><line class="cls-5" x1="318.17" y1="141.09" x2="210.33" y2="232.06"/><line class="cls-5" x1="318.17" y1="141.09" x2="201.77" y2="220.8"/><line class="cls-5" x1="318.17" y1="141.09" x2="194.37" y2="208.75"/><line class="cls-5" x1="318.17" y1="141.09" x2="188.22" y2="196.01"/><line class="cls-5" x1="318.17" y1="141.09" x2="183.37" y2="182.73"/><line class="cls-5" x1="318.17" y1="141.09" x2="179.88" y2="169.02"/><line class="cls-5" x1="318.17" y1="141.09" x2="177.78" y2="155.03"/><line class="cls-5" x1="318.17" y1="141.09" x2="177.09" y2="140.91"/><line class="cls-5" x1="318.17" y1="141.09" x2="177.81" y2="126.78"/><line class="cls-5" x1="318.17" y1="141.09" x2="179.95" y2="112.8"/><line class="cls-5" x1="318.17" y1="141.09" x2="183.48" y2="99.1"/><line class="cls-5" x1="318.17" y1="141.09" x2="188.36" y2="85.83"/><line class="cls-5" x1="318.17" y1="141.09" x2="194.55" y2="73.11"/><line class="cls-5" x1="318.17" y1="141.09" x2="201.97" y2="61.07"/><line class="cls-5" x1="318.17" y1="141.09" x2="210.57" y2="49.84"/><line class="cls-5" x1="318.17" y1="141.09" x2="220.25" y2="39.52"/><line class="cls-5" x1="318.17" y1="141.09" x2="230.91" y2="30.23"/><line class="cls-5" x1="318.17" y1="141.09" x2="242.45" y2="22.05"/><line class="cls-5" x1="318.17" y1="141.09" x2="254.74" y2="15.07"/><line class="cls-5" x1="318.17" y1="141.09" x2="267.68" y2="9.35"/><line class="cls-5" x1="318.17" y1="141.09" x2="281.13" y2="4.95"/><line class="cls-5" x1="318.17" y1="141.09" x2="294.94" y2="1.93"/><line class="cls-5" x1="318.18" y1="141.09" x2="306.51" y2="0.49"/></g><rect class="cls-6" x="292.18" y="183.69" width="54" height="8"/><rect class="cls-6" x="311.18" y="193.69" width="24" height="62"/><rect class="cls-6" x="308.18" y="130.69" width="21" height="28"/><polygon class="cls-7" points="307.18 120.69 301.58 122.83 298.18 129.69 338.62 128.32 337.43 124.39 307.18 120.69"/><rect class="cls-6" x="286.18" y="163.69" width="65" height="12"/><path class="cls-8" d="M475.05,520.3H725c-37.36-40.71-212.8-40.44-249.9,0Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M565.93,302.06h68.14a5.1,5.1,0,0,1,5.09,5.09h0a5.1,5.1,0,0,1-5.09,5.09H565.93a5.1,5.1,0,0,1-5.09-5.09h0a5.1,5.1,0,0,1,5.09-5.09Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M576.22,254.52h47.56c1.17,0,2.13.62,2.13,1.39v3.85c0,.77-1,1.4-2.13,1.4H576.22c-1.17,0-2.13-.63-2.13-1.4v-3.85c0-.77,1-1.39,2.13-1.39Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M622,284.19v-.48a4.65,4.65,0,0,0-4.64-4.64H582.63a4.65,4.65,0,0,0-4.65,4.64v.48h-.32a4.66,4.66,0,0,0-4.64,4.64v12.85a4.66,4.66,0,0,0,4.64,4.64h44.68a4.65,4.65,0,0,0,4.64-4.64V288.83a4.65,4.65,0,0,0-4.64-4.64Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M600,239.72a19.74,19.74,0,0,1,18.38,12.51H581.62A19.74,19.74,0,0,1,600,239.72Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M627,316.14l6.49,176.77h-67L573,316.14Z" transform="translate(-280.85 -127.6)"/><path class="cls-7" d="M605.75,339.43v-8.8a5.75,5.75,0,1,0-11.5,0v8.8Z" transform="translate(-280.85 -127.6)"/><path class="cls-7" d="M594.25,374.57h11.5V355.9a5.75,5.75,0,0,0-11.5,0v18.67Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M584.2,258.77H591v24.38H584.2V258.77Zm24.84,0h6.76v24.38H609V258.77Z" transform="translate(-280.85 -127.6)"/><path class="cls-8" d="M566.25,290.25H580.7V292H568.13v14.6h-1.88V290.25Zm53,0h14.45v16.38h-1.88V292H619.3v-1.78Z" transform="translate(-280.85 -127.6)"/><polygon class="cls-8" points="317.81 102.69 320.48 102.69 320.48 118.69 317.81 118.69 317.81 102.69 317.81 102.69"/></svg></a>
+    <nav aria-label="Main"><a href="#agenda">Schedule</a><a href="#">Speakers</a><a href="#">Venue</a><a href="#">Sponsors</a><a href="#">About</a></nav>
+    <a class="btn btn-signal" id="topCta" href="#">Map</a>
+    <button class="btn menu" type="button" aria-expanded="false">Menu</button>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <svg class="rays" id="rays" viewBox="-450 -450 900 900" aria-hidden="true"></svg>
+  <div class="beam" id="beam" aria-hidden="true"></div>
+  <div class="lamp" id="lamp" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <p class="mock-note">Mockup control. The live site would switch on its own.</p>
+      <div class="state-switch" id="switch" role="group" aria-label="Preview the homepage">
+        <span class="knob" id="knob"></span>
+        <button type="button" data-state="before" aria-pressed="false">Before camp</button>
+        <button type="button" data-state="during" aria-pressed="true">During camp</button>
+        <button type="button" data-state="after" aria-pressed="false">After camp</button>
+      </div>
+      <h1 id="h1">New England <br>Drupal Camp<span class="lit-copy" aria-hidden="true">New England <br>Drupal Camp</span></h1>
+      <p class="when" id="whenLine"></p>
+      <p class="where" id="whereLine"></p>
+      <div class="ctas" id="ctas"></div>
+    </div>
+    <aside class="status" id="statusBox" aria-live="polite"></aside>
+  </div>
+</section>
+
+<div class="practical">
+  <div class="wrap">
+    <a href="#"><strong>Gaige Hall, Rhode Island College</strong><span>600 Mt Pleasant Ave, Providence</span></a>
+    <a href="#"><strong>Parking</strong><span>Where to park on campus</span></a>
+    <a href="#"><strong>Code of conduct</strong><span>Report a concern to any organizer</span></a>
+    <a href="#"><strong>Talk to other attendees</strong><span>#nedcamp on Drupal Slack</span></a>
+  </div>
+</div>
+
+<main class="agenda wrap" id="agenda">
+  <div class="agenda-head">
+    <div>
+      <h2>Schedule</h2>
+      <nav class="days" aria-label="Day"><a href="#">Friday: training, summit, contribution</a><a href="#" aria-current="page">Saturday: sessions</a></nav>
+    </div>
+    <div class="filters" id="filters" role="group" aria-label="Highlight topics"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+
+<footer>
+  <div class="wrap">
+    <div><strong>Run by volunteers since 2014.</strong>Our mission is to grow Drupal expertise and community in New England.</div>
+    <div><strong>Find us</strong>Gaige Hall, Rhode Island College<br>600 Mt Pleasant Ave, Providence</div>
+    <div><strong>Stay in touch</strong>#nedcamp on Drupal Slack<br><a href="#">Get camp news by email</a></div>
+  </div>
+</footer>
+
+<script>
+// Sample content: the real NEDCamp 2026 Saturday agenda, used to stress-test layouts for 2027.
+const ROOMS = ["Auditorium","203","202","201","204"];
+const TRACK_NAMES = {fe:"Front-end",be:"Back-end",ai:"AI and automation",hu:"Being human",ux:"UX and design",pm:"Project management",ops:"DevOps",a11y:"Accessibility"};
+const SLOTS = [
+ {start:"8:00",end:"8:30",all:{title:"Registration and breakfast",where:"Gaige Hall lobby and 200"}},
+ {start:"8:30",end:"8:45",all:{title:"Opening remarks",where:"Auditorium"}},
+ {start:"9:00",end:"9:45",talks:[
+  {room:"203",title:"Introduction to Drupal LMS",who:"Mark Felton",org:"Tag1",tracks:["be","hu"],lvl:"All"},
+  {room:"202",title:"You Don't Need JS for That",who:"Aubrey Sambor",org:"",tracks:["fe"],lvl:"All"},
+  {room:"201",title:"Nothing Major Broke This Year. Now, Go Defend Your Budget.",who:"Fredric Mitchell",org:"Bright Plum",tracks:["a11y","pm"],lvl:"All"},
+  {room:"204",title:"Every Day Is Judgment Day",who:"Amber Matz",org:"Tugboat",tracks:["ai","hu"],lvl:"All"}]},
+ {start:"10:00",end:"10:45",talks:[
+  {room:"203",title:"Making Drupal Consumer-Friendly: Win More Clients with Modern Hosting",who:"Ashraf Abed",org:"Drupito",tracks:["ops","pm"],lvl:"All"},
+  {room:"202",title:"Content Modeling for Useful Components",who:"Marissa (Mars) Epstein",org:"Mars Digital",tracks:["be","ux"],lvl:"All"},
+  {room:"201",title:"Why Isn't This Done Yet? Matching Your Leadership to the Task",who:"Gena Dellett",org:"Skvare",tracks:["hu"],lvl:"All"},
+  {room:"204",title:"AI Ate My Work, and I'm Okay with That",who:"Jacob Rockowitz",org:"The Big Blue House",tracks:["ai","hu"],lvl:"All"}]},
+ {start:"11:00",end:"11:45",talks:[
+  {room:"Auditorium",title:"Passing the Drupal Torch: Will the Next Generation Take It?",who:"Thomas and Olivia Scola",org:"Bluefly.io, Acquia",tracks:["hu"],lvl:"All"},
+  {room:"203",title:"Beyond Decoupled: Drupal Canvas, Astro and Cloudflare at Scale",who:"Nathan Dentzau, Josh Fabean",org:"Blue Drop Labs",tracks:["fe"],lvl:"Intermediate"},
+  {room:"202",title:"The Future of Drupal in Just Five Words",who:"John Money",org:"Acquia",tracks:["ai"],lvl:"Intermediate"},
+  {room:"201",title:"De-shittification: What Error Messages Are Actually Telling Us",who:"Kit Miklik",org:"State of Maryland",tracks:["be","fe"],lvl:"All"},
+  {room:"204",title:"Drupal AI Modules Worth Knowing About",who:"Michael Anello",org:"DrupalEasy",tracks:["ai"],lvl:"All"}]},
+ {start:"12:00",end:"1:00",all:{title:"Lunch",where:"Faculty Center"}},
+ {start:"1:15",end:"2:15",keynote:{title:"The Work We Want",who:"Ethan Marcotte",org:"Designer, writer and speaker",room:"Auditorium"}},
+ {start:"2:15",end:"2:45",all:{title:"Group photo, then coffee",where:"Auditorium, then Gaige 200"}},
+ {start:"3:00",end:"3:45",talks:[
+  {room:"203",title:"Stop Guessing: Lightweight User Research for Teams",who:"Kyle Soucy",org:"Usable Interface",tracks:["ux"],lvl:"All"},
+  {room:"202",title:"The Great Hook Migration: Getting Down with OOP",who:"JD Flynn",org:"",tracks:["be"],lvl:"Intermediate"},
+  {room:"201",title:"Why Your Website Redesign Isn't Enough: The Case for Web Governance",who:"Rachel Wilken",org:"Indiana University",tracks:["pm","ux"],lvl:"All"},
+  {room:"204",title:"Trusted AI: Guardrails, Governance, and Proof Your Team Still Owns the Work",who:"Jim Birch",org:"Kanopi",tracks:["ai"],lvl:"Intermediate"}]},
+ {start:"4:00",end:"4:45",talks:[
+  {room:"203",title:"Overnight Website Challenge: How Drupal Spent 10 Years Making the Perfect Rapid Development Kit",who:"Chris Weber",org:"Velir",tracks:["ai","hu"],lvl:"All"},
+  {room:"202",title:"When Nobody Notices: Addiction in the Tech Community",who:"Stephen Cross",org:"Talking Drupal",tracks:["hu"],lvl:"All"},
+  {room:"201",title:"I Built My First Drupal Site Template, and You Can Too",who:"Martin Anderson-Clutz",org:"Acquia",tracks:["be","fe"],lvl:"Intermediate"},
+  {room:"204",title:"Fun with Canvas Code Components",who:"Brian Perry",org:"Actual AI",tracks:["fe"],lvl:"Intermediate"}]},
+ {start:"5:00",end:"7:00",all:{title:"After party",where:"Gaige Hall 200"}}
+];
+// Demo clock: pretend it is Saturday 10:20 AM so "now" states are visible.
+const DEMO_NOW = "10:20";
+function mins(t){let [h,m]=t.split(":").map(Number); if(h<8)h+=12; return h*60+m;}
+function slotState(s){const n=mins(DEMO_NOW); if(n>=mins(s.end))return "past"; if(n>=mins(s.start))return "now"; return "next";}
+
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const vt=fn=>(!reduce&&document.startViewTransition)?document.startViewTransition(fn):fn();
+const roomName=r=>r==="Auditorium"?"Auditorium":"Gaige "+r;
+const litCopy=h1.querySelector(".lit-copy");
+
+/* lighthouse: hairline rays drawn like the logo's, a lamp, a sweeping beam */
+const N=56; let rh="";
+for(let i=0;i<N;i++){
+  const a=(i/N)*Math.PI*2, r0=46, r1=(i%2?300:420)+((i*37)%5)*14;
+  const len=Math.round(r1-r0), d=Math.round(((i*7)%N)/N*500);
+  rh+=`<line x1="${(Math.cos(a)*r0).toFixed(1)}" y1="${(Math.sin(a)*r0).toFixed(1)}" x2="${(Math.cos(a)*r1).toFixed(1)}" y2="${(Math.sin(a)*r1).toFixed(1)}" style="--len:${len};--d:${d}ms" opacity="${i%2?.45:.8}"/>`;
+}
+rays.innerHTML=rh;
+function placeLamp(){
+  const hb=hero.getBoundingClientRect(), rb=rays.getBoundingClientRect(), h=h1.getBoundingClientRect();
+  const lx=rb.left+rb.width/2-hb.left, ly=rb.top+rb.height/2-hb.top;
+  lamp.style.left=lx+"px"; lamp.style.top=ly+"px";
+  beam.style.setProperty("--lx",lx+"px"); beam.style.setProperty("--ly",ly+"px");
+  litCopy.style.setProperty("--mx",(lx-(h.left-hb.left))+"px"); litCopy.style.setProperty("--my",(ly-(h.top-hb.top))+"px");
+}
+placeLamp(); addEventListener("resize",placeLamp);
+let t0=null;
+function sweep(ts){
+  if(t0===null)t0=ts;
+  const a=(200+((ts-t0)/12000)*360)%360;   // three-panel lens, one turn every 12 seconds: a beam crosses the page every 4 seconds
+  hero.style.setProperty("--a",a+"deg");
+  requestAnimationFrame(sweep);
+}
+if(!reduce) setTimeout(()=>{hero.classList.add("lit");requestAnimationFrame(sweep);},1150);
+else { hero.classList.add("lit"); hero.style.setProperty("--a","200deg"); }
+
+/* date-aware homepage */
+const STATES={
+  before:{cta:"Get a ticket",when:"Friday and Saturday, November 12 and 13, 2027",where:"Rhode Island College, Providence. Tickets go on sale in August.",
+    ctas:[["Get a ticket","btn-signal"],["Propose a session","btn-ghost"]],
+    status:()=>`<h2>Coming up</h2><ol>${[["Jun 1","Session proposals open"],["Aug 15","Proposals close"],["Sep 20","Schedule published"],["Nov 12","Training, summit and contribution day"]].map(([d,t],i)=>`<li style="--i:${i}"><time>${d}</time><div>${t}</div></li>`).join("")}</ol>`},
+  during:{cta:"Map",when:"Saturday, day two. Sessions until 4:45.",where:"Everything is in Gaige Hall. Lunch is in the Faculty Center.",
+    ctas:[["Today's schedule","btn-signal","#agenda"],["Directions and parking","btn-ghost"]],status:()=>duringStatus()},
+  after:{cta:"Watch sessions",when:"Thanks for coming. See you November 2027.",where:"Slides and recordings from Saturday are up.",
+    ctas:[["Watch the sessions","btn-signal"],["Save the date","btn-ghost"]],
+    status:()=>`<h2>Most watched</h2><ol>${[["The Work We Want","Ethan Marcotte, keynote"],["You Don't Need JS for That","Aubrey Sambor"],["Drupal AI Modules Worth Knowing About","Michael Anello"]].map(([t,w],i)=>`<li style="--i:${i}"><time>${i+1}</time><div>${t}<div class="room">${w}</div></div></li>`).join("")}</ol>`}
+};
+function duringStatus(){
+  const now=SLOTS.find(s=>slotState(s)==="now"), next=SLOTS.find(s=>slotState(s)==="next");
+  const left=mins(now.end)-mins(DEMO_NOW);
+  return `<h2><span class="live" aria-hidden="true"></span>Happening now</h2>
+  <div class="drain" aria-hidden="true"><i id="drain"></i></div>
+  <p class="drain-l">${left} minutes left. This slot ends at ${now.end}.</p>
+  <ol>${now.talks.map((t,i)=>`<li style="--i:${i}"><time>${t.room==="Auditorium"?"Aud":t.room}</time><div>${t.title}<div class="room">${t.who}</div></div></li>`).join("")}</ol>
+  <p class="foot">Next at ${next.start}: ${next.talks.length} sessions, including ${next.talks[0].title.split(":")[0]}.</p>`;
+}
+function moveKnob(){const b=document.querySelector('#switch button[aria-pressed="true"]');knob.style.left=b.offsetLeft+"px";knob.style.width=b.offsetWidth+"px";}
+function render(k){
+  const s=STATES[k];
+  document.body.className="is-"+k;
+  document.querySelectorAll("#switch button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.state===k));
+  topCta.textContent=s.cta; whenLine.textContent=s.when; whereLine.textContent=s.where;
+  ctas.innerHTML=s.ctas.map(([t,c,h])=>`<a class="btn ${c}" href="${h||"#"}">${t}</a>`).join("");
+  statusBox.innerHTML=s.status();
+  moveKnob(); placeLamp();
+  const d=document.getElementById("drain");
+  if(d){const now=SLOTS.find(s=>slotState(s)==="now");const f=(mins(DEMO_NOW)-mins(now.start))/(mins(now.end)-mins(now.start));
+    d.style.transform="scaleX(1)"; requestAnimationFrame(()=>requestAnimationFrame(()=>d.style.transform=`scaleX(${(1-f).toFixed(3)})`));}
+}
+document.querySelectorAll("#switch button").forEach(b=>b.onclick=()=>vt(()=>render(b.dataset.state)));
+render("during");
+document.fonts&&document.fonts.ready.then(()=>{moveKnob();placeLamp();});
+
+/* schedule grid */
+let active=new Set();
+filters.innerHTML=Object.entries(TRACK_NAMES).map(([k,v])=>`<button class="chip" type="button" data-k="${k}" aria-pressed="false">${v}</button>`).join("");
+filters.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;const k=b.dataset.k;active.has(k)?active.delete(k):active.add(k);b.setAttribute("aria-pressed",active.has(k));applyFilter();};
+const ALL=[];
+let gh=`<div class="hd">Time</div>`+ROOMS.map(r=>`<div class="hd">${roomName(r)}</div>`).join("");
+SLOTS.forEach(s=>{
+  const st=slotState(s);
+  gh+=`<div class="t ${st}">${s.start}<small>to ${s.end}</small></div>`;
+  if(s.talks){
+    ROOMS.forEach(r=>{
+      const t=s.talks.find(x=>x.room===r);
+      if(!t){gh+=`<div class="cell empty ${st}"></div>`;return;}
+      const i=ALL.push({...t,start:s.start,end:s.end})-1;
+      gh+=`<div class="cell ${st}" data-tracks="${t.tracks.join(" ")}"><button class="talk" data-i="${i}"><span class="room-m">${roomName(r)}</span><b>${t.title}</b><span class="who">${t.who}${t.org?", "+t.org:""}</span><span class="tags">${t.tracks.map(k=>TRACK_NAMES[k]).join(", ")}${t.lvl!=="All"?", "+t.lvl.toLowerCase():""}</span></button></div>`;
+    });
+  } else if(s.keynote){
+    const k=s.keynote, i=ALL.push({...k,tracks:["hu"],lvl:"All",start:s.start,end:s.end})-1;
+    gh+=`<div class="span keynote ${st}"><button class="talk" data-i="${i}"><em>Keynote in the Auditorium</em><b>${k.title}</b><span class="who">${k.who}, ${k.org}</span></button></div>`;
+  } else gh+=`<div class="span ${st}"><b>${s.all.title}</b><span>${s.all.where}</span></div>`;
+});
+grid.innerHTML=gh;
+function applyFilter(){
+  grid.querySelectorAll(".cell[data-tracks]").forEach(c=>{
+    const hit=active.size>0&&c.dataset.tracks.split(" ").some(k=>active.has(k));
+    c.classList.toggle("dim",active.size>0&&!hit); c.classList.toggle("match",hit);
+  });
+}
+grid.onclick=e=>{
+  const b=e.target.closest(".talk"); if(!b)return; const t=ALL[b.dataset.i];
+  dlgBody.innerHTML=`<div class="meta"><span>Saturday ${t.start} to ${t.end}</span><span>${t.room==="Auditorium"?"Auditorium":"Gaige Hall "+t.room}</span></div>
+  <h3>${t.title}</h3><p>${t.who}${t.org?", "+t.org:""}. ${t.tracks.map(k=>TRACK_NAMES[k]).join(", ")}. ${t.lvl==="All"?"For every level.":"Assumes some Drupal experience."}</p>
+  <div class="row"><button class="btn btn-ink" type="button">Add to my day</button><a class="btn btn-line" href="#">Slides</a><button class="btn btn-line" type="button" onclick="dlg.close()">Close</button></div>`;
+  dlg.showModal();
+};
+</script>
+</body>
+</html>
